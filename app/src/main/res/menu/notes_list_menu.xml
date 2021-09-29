@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/add_note_menu"
+        android:title="Create a note"
+        android:icon="@drawable/ic_baseline_playlist_add_check_24"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/settings"
+        android:title="Create a note"
+        android:icon="@drawable/settings"
+        app:showAsAction="always"
+        />
+
+
+</menu>
