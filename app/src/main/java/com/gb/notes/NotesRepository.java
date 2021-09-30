@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NotesRepository implements NotesRepositoryInterface{
-    List<NoteEntity> notesList= new ArrayList<>();
+    private List<NoteEntity> notesList= new ArrayList<>();
 
     @Override
     public List<NoteEntity> getAllNotes() {
@@ -25,11 +25,12 @@ public class NotesRepository implements NotesRepositoryInterface{
                 return true;
             }
         } return false;
-
-
-
     }
 
+    public boolean findById(int id){
+        //TODO
+        return true;
+    }
     @Override
     public boolean updateNote(int id, NoteEntity note) {
         removeNote(id);

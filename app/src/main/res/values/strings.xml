@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Notes</string>
+    <string name="warning_toast">Please, writedown title and maintext</string>
 </resources>

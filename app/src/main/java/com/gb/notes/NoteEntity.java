@@ -1,15 +1,23 @@
 package com.gb.notes;
 
-public class NoteEntity {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class NoteEntity implements Parcelable {
 
     private int id;
     private String title;
-    private String detail;
+    private String description;
 
     public NoteEntity(int id, String title, String detail) {
         this.id = id;
         this.title=title;
-        this.detail=detail;
+        this.description=detail;
+    }
+    private NoteEntity(Parcel in) {
+        id = in.readInt();
+        title = in.readString();
+        description = in.readString();
     }
 
     public void setId(int id){
@@ -30,12 +38,36 @@ public class NoteEntity {
     }
 
     public String getDetail() {
-        return detail;
+        return description;
     }
 
     public void setDetail(String detail) {
-        this.detail = detail;
+        this.description = detail;
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(title);
+        parcel.writeString(description);
+
+    }
+    public static final Parcelable.Creator<NoteEntity> CREATOR = new Parcelable.Creator<NoteEntity>() {
+
+        @Override
+        public NoteEntity createFromParcel(Parcel in) {
+            return new NoteEntity(in);
+        }
+
+        @Override
+        public NoteEntity[] newArray(int size) {
+            return new NoteEntity[size];
+        }
+    };
 }
