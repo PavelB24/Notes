@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.LauncherActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,8 +22,9 @@ public class NoteList extends AppCompatActivity {
     private RecyclerView recyclerView;
     private NotesRepository repository;
     private NotesAdapter adapter;
+    final String TAG = "@@@";
+    NoteEntity tempNote;
     ActivityResultLauncher<Intent> noteEditActivityLauncher;
-    ActivityResultLauncher<Intent> settingsLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +47,30 @@ public class NoteList extends AppCompatActivity {
         });
         noteEditActivityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (Activity.RESULT_OK == result.getResultCode()) {
-                Intent resultData= result.getData();
+                Intent resultData = result.getData();
+                //todo
+                tempNote = resultData.getParcelableExtra(NoteEntity.class.getCanonicalName());
+                if (!repository.findById(tempNote.getId())) {
+                    Log.d(TAG, "Объект перезаписан");
+                    repository.addNote(resultData.getParcelableExtra(NoteEntity.class.getCanonicalName()));
+                    adapter.setData(repository.getAllNotes());
+                } else {
+                    repository.updateNote(tempNote.getId(), tempNote);
+                    adapter.setData(repository.getAllNotes());
+                }
 
             }
 
         });
+
+
     }
 
     private void onClick(NoteEntity note) {
-        Toast.makeText(this, "Флопа?", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Edition mode", Toast.LENGTH_SHORT).show();
         Intent toEditNote = new Intent(this, NoteEditActivity.class);
         toEditNote.putExtra(NoteEntity.class.getCanonicalName(), note);
+        tempNote = note;
         noteEditActivityLauncher.launch(toEditNote);
 
         //todo

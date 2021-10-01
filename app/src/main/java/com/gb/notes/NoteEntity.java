@@ -3,11 +3,15 @@ package com.gb.notes;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Random;
+
 public class NoteEntity implements Parcelable {
+    static Random random = new Random();
 
     private int id;
     private String title;
     private String description;
+
 
     public NoteEntity(int id, String title, String detail) {
         this.id = id;
@@ -23,6 +27,12 @@ public class NoteEntity implements Parcelable {
     public void setId(int id){
         this.id=id;
     }
+    public int toGenerateId(){
+        id=random.nextInt();
+        setId(id);
+        return id;
+    }
+
 
     public int getId() {
         return id;

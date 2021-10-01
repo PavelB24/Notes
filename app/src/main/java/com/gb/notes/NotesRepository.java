@@ -28,8 +28,12 @@ public class NotesRepository implements NotesRepositoryInterface{
     }
 
     public boolean findById(int id){
-        //TODO
-        return true;
+        for (int i = 0; i <notesList.size() ; i++) {
+            if(notesList.get(i).getId()==id){
+                return true;
+            }
+        }
+        return false;
     }
     @Override
     public boolean updateNote(int id, NoteEntity note) {

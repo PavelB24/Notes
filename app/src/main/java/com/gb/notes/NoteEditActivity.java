@@ -20,8 +20,7 @@ public class NoteEditActivity extends AppCompatActivity {
     EditText title;
     EditText description;
     NoteEntity note;
-    final String TITLE_KEY = "TITLE";
-    final String DESCRIPTION_KEY = "DESCRIPTION";
+    Random random = new  Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,17 +37,16 @@ public class NoteEditActivity extends AppCompatActivity {
                 Intent data = new Intent();
                 //Редактируем заметку ниже
                 if (toCheckIfEdit() && !(title.getText().toString().isEmpty() && description.getText().toString().isEmpty())) {
-                    data.putExtra(TITLE_KEY, title.getText().toString());
-                    data.putExtra(DESCRIPTION_KEY, description.getText().toString());
-                    NoteEditActivity.this.finish();
+                    note= new NoteEntity(note.getId(), title.getText().toString(), description.getText().toString());
+                    data.putExtra(NoteEntity.class.getCanonicalName(), note);
                     setResult(Activity.RESULT_OK, data);
+                    NoteEditActivity.this.finish();
                     //Создаём новую заметку
-                } else if(!toCheckIfEdit() && (!title.getText().toString().isEmpty() && !description.getText().toString().isEmpty())){
-                    Random random = new Random();
+                } else if(!title.getText().toString().isEmpty() && !description.getText().toString().isEmpty()){
                     note= new NoteEntity(random.nextInt(), title.getText().toString(), description.getText().toString());
                     data.putExtra(NoteEntity.class.getCanonicalName(), note);
-                    NoteEditActivity.this.finish();
                     setResult(Activity.RESULT_OK, data);
+                    NoteEditActivity.this.finish();
                 } else {
                    Toast.makeText(NoteEditActivity.this, R.string.warning_toast, Toast.LENGTH_SHORT).show();
                 }
