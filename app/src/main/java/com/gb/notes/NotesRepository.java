@@ -18,25 +18,25 @@ public class NotesRepository implements NotesRepositoryInterface{
     }
 
     @Override
-    public boolean removeNote(int id) {
+    public boolean removeNote(String id) {
         for (int i = 0; i < notesList.size() ; i++) {
-            if(notesList.get(i).getId()==id){
+            if(notesList.get(i).getId().equals(id)){
                 notesList.remove(i);
                 return true;
             }
         } return false;
     }
 
-    public boolean findById(int id){
+    public boolean findById(String id){
         for (int i = 0; i <notesList.size() ; i++) {
-            if(notesList.get(i).getId()==id){
+            if(notesList.get(i).getId().equals(id)){
                 return true;
             }
         }
         return false;
     }
     @Override
-    public boolean updateNote(int id, NoteEntity note) {
+    public boolean updateNote(String id, NoteEntity note) {
         removeNote(id);
         note.setId(id);
         notesList.add(note);

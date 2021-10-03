@@ -48,7 +48,6 @@ public class NoteList extends AppCompatActivity {
         noteEditActivityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (Activity.RESULT_OK == result.getResultCode()) {
                 Intent resultData = result.getData();
-                //todo
                 tempNote = resultData.getParcelableExtra(NoteEntity.class.getCanonicalName());
                 if (!repository.findById(tempNote.getId())) {
                     Log.d(TAG, "Объект перезаписан");

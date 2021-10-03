@@ -4,37 +4,39 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class NoteEntity implements Parcelable {
-    static Random random = new Random();
 
-    private int id;
+    private String id;
     private String title;
     private String description;
+    private int originDay;
+    private int originMonth;
+    private int originYear;
+    private UUID uuid;
 
-
-    public NoteEntity(int id, String title, String detail) {
+    public NoteEntity(String id, String title, String detail, int originDay, int originMonth, int originYear) {
         this.id = id;
         this.title=title;
         this.description=detail;
+        this.originDay=originDay;
+        this.originMonth=originMonth;
+        this.originYear=originYear;
     }
+
     private NoteEntity(Parcel in) {
-        id = in.readInt();
+        id = in.readString();
         title = in.readString();
         description = in.readString();
     }
 
-    public void setId(int id){
+    public void setId(String id){
         this.id=id;
     }
-    public int toGenerateId(){
-        id=random.nextInt();
-        setId(id);
-        return id;
-    }
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -63,11 +65,12 @@ public class NoteEntity implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
+        parcel.writeString(id);
         parcel.writeString(title);
         parcel.writeString(description);
-
     }
+
+
     public static final Parcelable.Creator<NoteEntity> CREATOR = new Parcelable.Creator<NoteEntity>() {
 
         @Override

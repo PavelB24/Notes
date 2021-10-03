@@ -7,20 +7,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Random;
+import java.util.UUID;
 
 public class NoteEditActivity extends AppCompatActivity {
     Button applyButton;
     EditText title;
     EditText description;
     NoteEntity note;
-    Random random = new  Random();
+    DatePicker datePicker;
+    UUID uuid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,21 +35,24 @@ public class NoteEditActivity extends AppCompatActivity {
         applyButton = findViewById(R.id.apply_button);
         title = findViewById(R.id.title_edittext);
         description = findViewById(R.id.description_edittext);
+        datePicker= findViewById(R.id.date_picker_actions);
         toFillTheNote();
 
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent data = new Intent();
+                uuid= UUID.randomUUID();
                 //Редактируем заметку ниже
                 if (toCheckIfEdit() && !(title.getText().toString().isEmpty() && description.getText().toString().isEmpty())) {
-                    note= new NoteEntity(note.getId(), title.getText().toString(), description.getText().toString());
+                    note= new NoteEntity(note.getId(), title.getText().toString(), description.getText().toString(), datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
                     data.putExtra(NoteEntity.class.getCanonicalName(), note);
                     setResult(Activity.RESULT_OK, data);
                     NoteEditActivity.this.finish();
+
                     //Создаём новую заметку
                 } else if(!title.getText().toString().isEmpty() && !description.getText().toString().isEmpty()){
-                    note= new NoteEntity(random.nextInt(), title.getText().toString(), description.getText().toString());
+                    note= new NoteEntity(uuid.toString(), title.getText().toString(), description.getText().toString(), datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
                     data.putExtra(NoteEntity.class.getCanonicalName(), note);
                     setResult(Activity.RESULT_OK, data);
                     NoteEditActivity.this.finish();
@@ -74,4 +83,5 @@ public class NoteEditActivity extends AppCompatActivity {
         }
 
     }
+
 }

@@ -8,8 +8,8 @@ public interface NotesRepositoryInterface {
 
     void addNote(NoteEntity note);
 
-    boolean removeNote(int id);
+    boolean removeNote(String id);
 
-    boolean updateNote(int id, NoteEntity note);
+    boolean updateNote(String id, NoteEntity note);
 
 }
