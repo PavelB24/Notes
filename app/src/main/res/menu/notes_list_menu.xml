@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" >
     <item
         android:id="@+id/add_note_menu"
-        android:title="Create a note"
+        android:title="@string/create_a_note_menu_button_text"
         android:icon="@drawable/ic_baseline_playlist_add_check_24"
         app:showAsAction="always"
         />
     <item
         android:id="@+id/settings"
-        android:title="Create a note"
+        android:title="@string/settings_button_text"
         android:icon="@drawable/settings"
         app:showAsAction="always"
         />
