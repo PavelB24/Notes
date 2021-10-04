@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DatePickerStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:datePickerMode">spinner</item>
+        <item name="android:calendarViewShown">false</item>
+        <item name="android:scrollbarSize">@dimen/material_emphasis_high_type</item>
+
+    </style>
+
+    <style name="title_edittext_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/edittext_margin_top</item>
+        <item name="android:inputType">text</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColorHint">#B2000000</item>
+        <item name="android:padding">@dimen/Edittext_padding</item>
+        <item name="android:textSize">@dimen/note_title_text_size</item>
+    </style>
+
+    <style name="description_edittext_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/edittext_margin_top</item>
+        <item name="android:textColorHint">#B3000000</item>
+        <item name="android:inputType">textMultiLine|text</item>
+        <item name="android:padding">@dimen/Edittext_padding</item>
+        <item name="android:textSize">@dimen/note_description_text_size</item>
+    </style>
+
+    <style name="date_picker_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">@dimen/note_title_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">@color/white</item>
+        <item name="android:textColor">#CC040110</item>
+    </style>
+
+    <style name="apply_button_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/apply_button_top_margin</item>
+        <item name="android:background">#369C27B0</item>
+    </style>
+</resources>
