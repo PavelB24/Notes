@@ -3,6 +3,7 @@ package com.gb.notes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,13 +18,16 @@ import android.widget.Toast;
 
 import java.util.UUID;
 
-public class NoteEditActivity extends Fragment {
+public class NoteEdit extends Fragment {
     Button applyButton;
     EditText title;
     EditText description;
     NoteEntity note;
     DatePicker datePicker;
     UUID uuid;
+    Bundle data;
+    private final String BUNDLE_KEY = NoteEdit.class.getCanonicalName();
+    private final String KEY_FROM_EDITOR = NoteEntity.class.getCanonicalName();
 
 
     @Nullable
@@ -43,23 +47,23 @@ public class NoteEditActivity extends Fragment {
     applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent data = new Intent();
                 uuid = UUID.randomUUID();
                 //Редактируем заметку ниже
                 if (toCheckIfEdit() && !(title.getText().toString().isEmpty() && description.getText().toString().isEmpty())) {
                     note = new NoteEntity(note.getId(), title.getText().toString(), description.getText().toString(), datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
-                    data.putExtra(NoteEntity.class.getCanonicalName(), note);
-                    setResult(Activity.RESULT_OK, data);
-                    NoteEditActivity.this.finish();
+                    data.putParcelable(BUNDLE_KEY, data);
+                    getParentFragmentManager().setFragmentResult(KEY_FROM_EDITOR , data);
+                    getParentFragmentManager().popBackStackImmediate();
 
                     //Создаём новую заметку
                 } else if (!title.getText().toString().isEmpty() && !description.getText().toString().isEmpty()) {
                     note = new NoteEntity(uuid.toString(), title.getText().toString(), description.getText().toString(), datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
-                    data.putExtra(NoteEntity.class.getCanonicalName(), note);
-                    setResult(Activity.RESULT_OK, data);
-                    NoteEditActivity.this.finish();
+                    data= new Bundle();
+                    data.putParcelable(BUNDLE_KEY, data);
+                    getParentFragmentManager().setFragmentResult(KEY_FROM_EDITOR , data);
+                    getParentFragmentManager().popBackStackImmediate();
                 } else {
-                    Toast.makeText(NoteEditActivity.this, R.string.warning_toast, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.warning_toast, Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -74,16 +78,29 @@ public class NoteEditActivity extends Fragment {
     }
 
     private boolean toCheckIfEdit() {
-        //Если есть экстра с классом заметки
-        if (getIntent().hasExtra(NoteEntity.class.getCanonicalName())) {
+        //Если есть бандл с классом заметка
+        if (!getArguments().isEmpty()) {
             if (note == null) {
-                note = getIntent().getParcelableExtra(NoteEntity.class.getCanonicalName());
+                data= getArguments();
+                note = data.getParcelable(NoteEntity.class.getCanonicalName());
             }
             return true;
         } else {
             return false;
         }
 
+    }
+
+    public static NoteEdit getInstance(){
+        NoteEdit noteEdit= new NoteEdit();
+        noteEdit.getParentFragmentManager().setFragmentResultListener(NoteList.class.getCanonicalName(), noteEdit.getActivity(), new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                if(!result.isEmpty()){
+                noteEdit.setArguments(result);}
+            }
+        });
+        return noteEdit;
     }
 
 }

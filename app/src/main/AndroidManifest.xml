@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NoteEditActivity"
+            android:name=".NoteEdit"
             android:exported="true" />
 
     </application>
