@@ -1,11 +1,15 @@
 package com.gb.notes;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -13,7 +17,7 @@ import android.widget.Toast;
 
 import java.util.UUID;
 
-public class NoteEditActivity extends AppCompatActivity {
+public class NoteEditActivity extends Fragment {
     Button applyButton;
     EditText title;
     EditText description;
@@ -22,17 +26,21 @@ public class NoteEditActivity extends AppCompatActivity {
     UUID uuid;
 
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_note_edit);
-        applyButton = findViewById(R.id.apply_button);
-        title = findViewById(R.id.title_edittext);
-        description = findViewById(R.id.description_edittext);
-        datePicker = findViewById(R.id.date_picker_actions);
-        toFillTheNote();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.note_edit_layout, container, false);
+    }
 
-        applyButton.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        applyButton = view.findViewById(R.id.apply_button);
+        title = view.findViewById(R.id.title_edittext);
+        description = view.findViewById(R.id.description_edittext);
+        datePicker = view.findViewById(R.id.date_picker_actions);
+        toFillTheNote();
+    applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent data = new Intent();

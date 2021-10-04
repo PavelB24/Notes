@@ -1,48 +1,46 @@
 package com.gb.notes;
 
 import android.app.Activity;
-import android.app.LauncherActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class NoteList extends AppCompatActivity {
-    private androidx.appcompat.widget.Toolbar toolbar;
+public class NoteList extends Fragment {
     private RecyclerView recyclerView;
     private NotesRepository repository;
     private NotesAdapter adapter;
-    final String TAG = "@@@";
-    NoteEntity tempNote;
-    ActivityResultLauncher<Intent> noteEditActivityLauncher;
+
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.note_list_layout, container, false);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_note_list);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         repository = new NotesRepository();
         adapter = new NotesAdapter();
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        recyclerView = findViewById(R.id.recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView = view.findViewById(R.id.recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         adapter.setData(repository.getAllNotes());
         //Мы передаём интерфейс с методом, логика которого прописана в активити
         adapter.setOnItemClickListener(new NotesAdapter.OnNoteClickListener() {
             @Override
             public void onClick(NoteEntity note) {
-                NoteList.this.onClick(note);
+                onClick(note);
             }
         });
         noteEditActivityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -50,7 +48,6 @@ public class NoteList extends AppCompatActivity {
                 Intent resultData = result.getData();
                 tempNote = resultData.getParcelableExtra(NoteEntity.class.getCanonicalName());
                 if (!repository.findById(tempNote.getId())) {
-                    Log.d(TAG, "Объект перезаписан");
                     repository.addNote(resultData.getParcelableExtra(NoteEntity.class.getCanonicalName()));
                     adapter.setData(repository.getAllNotes());
                 } else {
@@ -61,37 +58,15 @@ public class NoteList extends AppCompatActivity {
             }
 
         });
-
-
     }
-
     private void onClick(NoteEntity note) {
-        Toast.makeText(this, "Edition mode", Toast.LENGTH_SHORT).show();
-        Intent toEditNote = new Intent(this, NoteEditActivity.class);
-        toEditNote.putExtra(NoteEntity.class.getCanonicalName(), note);
+        Toast.makeText(getActivity(), "Edition mode", Toast.LENGTH_SHORT).show();
+
         tempNote = note;
-        noteEditActivityLauncher.launch(toEditNote);
+
 
         //todo
 
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.notes_list_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.add_note_menu) {
-            Intent toAddNewNoteIntent = new Intent(this, NoteEditActivity.class);
-            noteEditActivityLauncher.launch(toAddNewNoteIntent);
-            return true;
-        } else {
-            super.onOptionsItemSelected(item);
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }
+
