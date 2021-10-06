@@ -22,7 +22,7 @@ public class NoteEntity implements Parcelable, Serializable {
         this.title=title;
         this.description=detail;
         this.originDay=originDay;
-        this.originMonth=originMonth;
+        this.originMonth=originMonth+1;
         this.originYear=originYear;
     }
 
