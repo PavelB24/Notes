@@ -1,6 +1,7 @@
 package com.gb.notes;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +9,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     List<NoteEntity> data = new ArrayList<>();
     OnNoteClickListener listener;
+    private final String TAG = "@@@";
 
     @NonNull
     @Override
@@ -64,5 +69,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     public interface OnNoteClickListener {
         void onClick(NoteEntity note);
     }
+
 }
 

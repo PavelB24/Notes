@@ -3,10 +3,11 @@ package com.gb.notes;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.Random;
 import java.util.UUID;
 
-public class NoteEntity implements Parcelable {
+public class NoteEntity implements Parcelable, Serializable {
 
     private String id;
     private String title;

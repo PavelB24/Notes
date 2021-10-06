@@ -20,14 +20,13 @@ import java.util.UUID;
 
 public class NoteEdit extends Fragment {
     Button applyButton;
-    EditText title;
-    EditText description;
+    EditText titleEditText;
+    EditText descriptionEditText;
     NoteEntity note;
     DatePicker datePicker;
     UUID uuid;
     Bundle data;
-    private final String BUNDLE_KEY = NoteEdit.class.getCanonicalName();
-    private final String KEY_FROM_EDITOR = NoteEntity.class.getCanonicalName();
+
 
 
     @Nullable
@@ -40,27 +39,27 @@ public class NoteEdit extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         applyButton = view.findViewById(R.id.apply_button);
-        title = view.findViewById(R.id.title_edittext);
-        description = view.findViewById(R.id.description_edittext);
+        titleEditText = view.findViewById(R.id.title_edittext);
+        descriptionEditText = view.findViewById(R.id.description_edittext);
         datePicker = view.findViewById(R.id.date_picker_actions);
         toFillTheNote();
-    applyButton.setOnClickListener(new View.OnClickListener() {
+        applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 uuid = UUID.randomUUID();
                 //Редактируем заметку ниже
-                if (toCheckIfEdit() && !(title.getText().toString().isEmpty() && description.getText().toString().isEmpty())) {
-                    note = new NoteEntity(note.getId(), title.getText().toString(), description.getText().toString(), datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
-                    data.putParcelable(BUNDLE_KEY, data);
-                    getParentFragmentManager().setFragmentResult(KEY_FROM_EDITOR , data);
+                if (toCheckIfEdit() && !(titleEditText.getText().toString().isEmpty() && descriptionEditText.getText().toString().isEmpty())) {
+                    note = new NoteEntity(note.getId(), titleEditText.getText().toString(), descriptionEditText.getText().toString(), datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
+                    data.putParcelable(NoteEntity.class.getCanonicalName(), note);
+                    getParentFragmentManager().setFragmentResult(NoteEdit.class.getCanonicalName(), data);
                     getParentFragmentManager().popBackStackImmediate();
 
                     //Создаём новую заметку
-                } else if (!title.getText().toString().isEmpty() && !description.getText().toString().isEmpty()) {
-                    note = new NoteEntity(uuid.toString(), title.getText().toString(), description.getText().toString(), datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
-                    data= new Bundle();
-                    data.putParcelable(BUNDLE_KEY, data);
-                    getParentFragmentManager().setFragmentResult(KEY_FROM_EDITOR , data);
+                } else if (!titleEditText.getText().toString().isEmpty() && !descriptionEditText.getText().toString().isEmpty()) {
+                    note = new NoteEntity(uuid.toString(), titleEditText.getText().toString(), descriptionEditText.getText().toString(), datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
+                    data = new Bundle();
+                    data.putParcelable(NoteEntity.class.getCanonicalName(), note);
+                    getParentFragmentManager().setFragmentResult(NoteEdit.class.getCanonicalName(), data);
                     getParentFragmentManager().popBackStackImmediate();
                 } else {
                     Toast.makeText(getActivity(), R.string.warning_toast, Toast.LENGTH_SHORT).show();
@@ -72,17 +71,18 @@ public class NoteEdit extends Fragment {
 
     private void toFillTheNote() {
         if (toCheckIfEdit()) {
-            title.setText(note.getTitle());
-            description.setText(note.getDetail());
+            note = data.getParcelable(NoteEntity.class.getCanonicalName());
+            titleEditText.setText(note.getTitle());
+            descriptionEditText.setText(note.getDetail());
+
         }
     }
 
     private boolean toCheckIfEdit() {
         //Если есть бандл с классом заметка
-        if (!getArguments().isEmpty()) {
-            if (note == null) {
-                data= getArguments();
-                note = data.getParcelable(NoteEntity.class.getCanonicalName());
+        if (!(getArguments()==null)) {
+            if (data == null) {
+                data = getArguments();
             }
             return true;
         } else {
@@ -91,15 +91,9 @@ public class NoteEdit extends Fragment {
 
     }
 
-    public static NoteEdit getInstance(){
-        NoteEdit noteEdit= new NoteEdit();
-        noteEdit.getParentFragmentManager().setFragmentResultListener(NoteList.class.getCanonicalName(), noteEdit.getActivity(), new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                if(!result.isEmpty()){
-                noteEdit.setArguments(result);}
-            }
-        });
+    public static NoteEdit getInstance(Bundle data) {
+        NoteEdit noteEdit = new NoteEdit();
+        noteEdit.setArguments(data);
         return noteEdit;
     }
 

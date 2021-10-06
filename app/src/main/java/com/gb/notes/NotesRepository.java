@@ -1,13 +1,16 @@
 package com.gb.notes;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotesRepository implements NotesRepositoryInterface{
-    private List<NoteEntity> notesList= new ArrayList<>();
+public class NotesRepository implements NotesRepositoryInterface, Parcelable{
+    private ArrayList<NoteEntity> notesList= new ArrayList<>();
 
     @Override
-    public List<NoteEntity> getAllNotes() {
+    public ArrayList<NoteEntity> getAllNotes() {
         return notesList;
     }
 
@@ -15,6 +18,11 @@ public class NotesRepository implements NotesRepositoryInterface{
     public void addNote(NoteEntity note) {
         notesList.add(note);
 
+    }
+
+    @Override
+    public void addAll(List<? extends NoteEntity> arrayList) {
+        notesList.addAll(arrayList);
     }
 
     @Override
@@ -27,6 +35,10 @@ public class NotesRepository implements NotesRepositoryInterface{
         } return false;
     }
 
+
+
+
+
     public boolean findById(String id){
         for (int i = 0; i <notesList.size() ; i++) {
             if(notesList.get(i).getId().equals(id)){
@@ -35,6 +47,8 @@ public class NotesRepository implements NotesRepositoryInterface{
         }
         return false;
     }
+
+
     @Override
     public boolean updateNote(String id, NoteEntity note) {
         removeNote(id);
@@ -43,4 +57,27 @@ public class NotesRepository implements NotesRepositoryInterface{
         return true;
 
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeList(notesList);
+
+    }
+    public static final Parcelable.Creator<NotesRepository> CREATOR = new Creator<NotesRepository>() {
+        @Override
+        public NotesRepository createFromParcel(Parcel parcel) {
+            return null;
+        }
+
+        @Override
+        public NotesRepository[] newArray(int i) {
+            return new NotesRepository[0];
+        }
+    };
+
 }
