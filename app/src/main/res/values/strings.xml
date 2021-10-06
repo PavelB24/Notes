@@ -17,4 +17,8 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="notes_item_menu_title">Your Notes</string>
+    <string name="manage_item_menu_title">Data Manager</string>
+    <string name="profile_item_menu_title">Profile</string>
+    <string name="sort_notes_item_menu_title">Sort Notes</string>
 </resources>
