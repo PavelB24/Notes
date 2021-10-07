@@ -30,6 +30,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements FragmentsCall {
     private FragmentManager fragmentManager;
     private NotesRepository repository;
+    private BottomNavigationItemView bottomNavigationItemView;
     private final String LOCAL_REPOSITORY_NAME = "repo.bin";
 
 
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
+        bottomNavigationItemView= findViewById(R.id.navigation_bar);
         repository = new NotesRepository();
         try {
             toInitNotesInRepository();
