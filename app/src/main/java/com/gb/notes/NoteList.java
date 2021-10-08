@@ -51,8 +51,14 @@ public class NoteList extends Fragment implements NotesAdapter.OnNoteClickListen
         //Мы передаём интерфейс с методом, логика которого прописана в активити (а теперь в фрагменте)
         adapter.setOnItemClickListener(new NotesAdapter.OnNoteClickListener() {
             @Override
-            public void onClick(NoteEntity note) {
-                NoteList.this.onClick(note);
+            public void onClickEdit(NoteEntity note) {
+                NoteList.this.onClickEdit(note);
+            }
+
+            @Override
+            public void onClickDelete(NoteEntity note) {
+                NoteList.this.onClickDelete(note);
+
             }
         });
         //TODO переписать получение результата
@@ -74,12 +80,19 @@ public class NoteList extends Fragment implements NotesAdapter.OnNoteClickListen
     }
 
     @Override
-    public void onClick(NoteEntity note) {
-        Toast.makeText(getActivity(), "Edition mode", Toast.LENGTH_SHORT).show();
+    public void onClickEdit(NoteEntity note) {
+        Toast.makeText(getActivity(), R.string.edition_mode_toast_text, Toast.LENGTH_SHORT).show();
         data = new Bundle();
         data.putParcelable(NoteEntity.class.getCanonicalName(), note);
         ((FragmentsCall) requireActivity()).callEditionFragment(data);
 
+    }
+
+    @Override
+    public void onClickDelete(NoteEntity note) {
+        Toast.makeText(getActivity(), R.string.deleted_note_toast_text, Toast.LENGTH_SHORT).show();
+        repository.removeNote(note.getId());
+        adapter.setData(repository.getAllNotes());
     }
 
     @Override

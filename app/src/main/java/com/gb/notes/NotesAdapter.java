@@ -45,7 +45,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onClick(note);
+                listener.onClickEdit(note);
+            }
+        });
+        holder.deleteImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClickDelete(note);
             }
         });
 
@@ -67,7 +73,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     }
 
     public interface OnNoteClickListener {
-        void onClick(NoteEntity note);
+        void onClickEdit(NoteEntity note);
+
+        void onClickDelete(NoteEntity note);
+    }
+
+    public interface OnDeleteNoteButtonClickListener {
+        void onClickDelete(NoteEntity note);
     }
 
 }

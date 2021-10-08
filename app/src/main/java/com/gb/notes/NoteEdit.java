@@ -74,6 +74,7 @@ public class NoteEdit extends Fragment {
             note = data.getParcelable(NoteEntity.class.getCanonicalName());
             titleEditText.setText(note.getTitle());
             descriptionEditText.setText(note.getDetail());
+            datePicker.updateDate(note.getOriginYear(), note.getOriginMonth()-1, note.getOriginDay());
 
         }
     }

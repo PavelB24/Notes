@@ -1,6 +1,7 @@
 package com.gb.notes;
 
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,4 +14,6 @@ public class NoteViewHolder extends RecyclerView.ViewHolder {
     }
     public TextView titleTextView = itemView.findViewById(R.id.note_title_textview);
     public TextView descriptionTextView = itemView.findViewById(R.id.note_description_textview);
+    public ImageButton deleteImageButton= itemView.findViewById(R.id.delete_note_image_button);
+
 }

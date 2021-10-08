@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,7 +31,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements FragmentsCall {
     private FragmentManager fragmentManager;
     private NotesRepository repository;
-    private BottomNavigationItemView bottomNavigationItemView;
+    private BottomNavigationView bottomNavigationItemView;
     private final String LOCAL_REPOSITORY_NAME = "repo.bin";
 
 
