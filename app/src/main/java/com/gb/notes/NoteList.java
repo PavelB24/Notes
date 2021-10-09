@@ -111,7 +111,10 @@ public class NoteList extends Fragment implements NotesAdapter.OnNoteClickListen
             data = null;
             ((FragmentsCall) requireActivity()).callEditionFragment(data);
             return true;
-        } else {
+        }  else if(item.getItemId()== R.id.settings){
+            ((FragmentsCall) requireActivity()).callSettingsFragment();
+        }
+        else {
             super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);

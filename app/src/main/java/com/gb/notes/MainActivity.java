@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,22 +40,46 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
-        bottomNavigationItemView= findViewById(R.id.navigation_bar);
         repository = new NotesRepository();
+        setNavigation();
         try {
             toInitNotesInRepository();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         fragmentManager = getSupportFragmentManager();
-        Bundle savedData = new Bundle();
-        savedData.putParcelable(NotesRepository.class.getCanonicalName(), repository);
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            fragmentManager.beginTransaction().add(R.id.container_for_fragment_land_1, NoteList.getInstance(savedData)).commit();
-        } else {
-            fragmentManager.beginTransaction().add(R.id.container_for_fragment, NoteList.getInstance(savedData)).commit();
+        bottomNavigationItemView.setSelectedItemId(R.id.notes_item_menu);
+        if (getResources().getConfiguration().orientation!= Configuration.ORIENTATION_LANDSCAPE){
+            fragmentManager.popBackStack();
         }
 
+    }
+
+    private void setNavigation() {
+        bottomNavigationItemView= findViewById(R.id.navigation_bar);
+        Bundle savedData = new Bundle();
+        savedData.putParcelable(NotesRepository.class.getCanonicalName(), repository);
+        bottomNavigationItemView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if(item.getItemId()==R.id.notes_item_menu){
+                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        fragmentManager.popBackStack();
+                        fragmentManager.beginTransaction().replace(R.id.container_for_fragment_land_1, NoteList.getInstance(savedData)).commit();
+                    } else {
+                        fragmentManager.popBackStack();
+                        fragmentManager.beginTransaction().replace(R.id.container_for_fragment, NoteList.getInstance(savedData)).commit();
+                    }
+                }
+                else if(item.getItemId()==R.id.data_manager_item_menu){
+                    fragmentManager.beginTransaction().replace(R.id.container_for_fragment, DataManagerFragment.getInstance(savedData)).commit();
+                }
+                else if(item.getItemId()==R.id.profile_item_menu){
+                    fragmentManager.beginTransaction().replace(R.id.container_for_fragment, new ProfileFragment()).commit();
+                }
+                return true;
+            }
+        });
     }
 
     private void toInitNotesInRepository() throws IOException, ClassNotFoundException {
@@ -82,6 +107,11 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
         } else {
             fragmentManager.beginTransaction().add(R.id.container_for_fragment, NoteEdit.getInstance(data)).addToBackStack(null).commit();
         }
+    }
+
+    @Override
+    public void callSettingsFragment() {
+        fragmentManager.beginTransaction().replace(R.id.container_for_fragment, new  SettingsFragment()).addToBackStack(null).commit();
     }
 
 

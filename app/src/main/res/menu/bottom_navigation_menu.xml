@@ -5,16 +5,13 @@
         android:icon="@drawable/ic_baseline_list_24"
         android:title="@string/notes_item_menu_title" />
     <item
-        android:id="@+id/manage_item_menu"
+        android:id="@+id/data_manager_item_menu"
         android:icon="@drawable/ic_baseline_data_array_24"
         android:title="@string/manage_item_menu_title" />
     <item
         android:id="@+id/profile_item_menu"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="@string/profile_item_menu_title" />
-    <item
-        android:id="@+id/sort_notes_item_menu"
-        android:icon="@drawable/ic_baseline_sort_24"
-        android:title="@string/sort_notes_item_menu_title" />
+
 
 </menu>
