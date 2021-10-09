@@ -3,6 +3,8 @@ package com.gb.notes;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.gb.notes.Interfaces.NotesRepositoryInterface;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,12 +1,9 @@
-package com.gb.notes;
+package com.gb.notes.Fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +13,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.gb.notes.NoteEntity;
+import com.gb.notes.R;
+
 import java.util.UUID;
 
-public class NoteEdit extends Fragment {
+public class NoteEditFragment extends Fragment {
     Button applyButton;
     EditText titleEditText;
     EditText descriptionEditText;
@@ -51,7 +51,7 @@ public class NoteEdit extends Fragment {
                 if (toCheckIfEdit() && !(titleEditText.getText().toString().isEmpty() && descriptionEditText.getText().toString().isEmpty())) {
                     note = new NoteEntity(note.getId(), titleEditText.getText().toString(), descriptionEditText.getText().toString(), datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
                     data.putParcelable(NoteEntity.class.getCanonicalName(), note);
-                    getParentFragmentManager().setFragmentResult(NoteEdit.class.getCanonicalName(), data);
+                    getParentFragmentManager().setFragmentResult(NoteEditFragment.class.getCanonicalName(), data);
                     getParentFragmentManager().popBackStackImmediate();
 
                     //Создаём новую заметку
@@ -59,7 +59,7 @@ public class NoteEdit extends Fragment {
                     note = new NoteEntity(uuid.toString(), titleEditText.getText().toString(), descriptionEditText.getText().toString(), datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
                     data = new Bundle();
                     data.putParcelable(NoteEntity.class.getCanonicalName(), note);
-                    getParentFragmentManager().setFragmentResult(NoteEdit.class.getCanonicalName(), data);
+                    getParentFragmentManager().setFragmentResult(NoteEditFragment.class.getCanonicalName(), data);
                     getParentFragmentManager().popBackStackImmediate();
                 } else {
                     Toast.makeText(getActivity(), R.string.warning_toast, Toast.LENGTH_SHORT).show();
@@ -92,8 +92,8 @@ public class NoteEdit extends Fragment {
 
     }
 
-    public static NoteEdit getInstance(Bundle data) {
-        NoteEdit noteEdit = new NoteEdit();
+    public static NoteEditFragment getInstance(Bundle data) {
+        NoteEditFragment noteEdit = new NoteEditFragment();
         noteEdit.setArguments(data);
         return noteEdit;
     }

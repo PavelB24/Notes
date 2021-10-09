@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bokeh"
     android:orientation="vertical"
-    tools:context=".NoteEdit">
+    tools:context=".Fragments.NoteEditFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

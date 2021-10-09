@@ -1,4 +1,4 @@
-package com.gb.notes;
+package com.gb.notes.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.gb.notes.R;
 
 public class SettingsFragment extends Fragment {
     @Nullable

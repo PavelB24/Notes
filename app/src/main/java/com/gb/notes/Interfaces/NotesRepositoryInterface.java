@@ -1,6 +1,8 @@
-package com.gb.notes;
+package com.gb.notes.Interfaces;
 
 import android.os.Parcelable;
+
+import com.gb.notes.NoteEntity;
 
 import java.util.ArrayList;
 import java.util.List;

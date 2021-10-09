@@ -1,4 +1,4 @@
-package com.gb.notes;
+package com.gb.notes.Fragments;
 
 import androidx.fragment.app.Fragment;
 

@@ -1,4 +1,4 @@
-package com.gb.notes;
+package com.gb.notes.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,16 +17,23 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gb.notes.Interfaces.FragmentsCall;
+import com.gb.notes.NoteEntity;
+import com.gb.notes.NotesAdapter;
+import com.gb.notes.NotesRepository;
+import com.gb.notes.R;
 
-public class NoteList extends Fragment implements NotesAdapter.OnNoteClickListener {
+
+public class NoteListFragment extends Fragment implements NotesAdapter.OnNoteClickListener {
     private RecyclerView recyclerView;
     private NotesAdapter adapter;
     private NotesRepository repository;
-    NoteEntity tempNote;
+    private NoteEntity tempNote;
     private androidx.appcompat.widget.Toolbar toolbar;
-    Bundle data;
+    private Bundle data;
+    private Bundle savedData;
     public final String TAG = "@@@";
-    Bundle savedData;
+    public final String CLEAR_DATABASE = "OK";
 
 
     @Nullable
@@ -52,17 +59,17 @@ public class NoteList extends Fragment implements NotesAdapter.OnNoteClickListen
         adapter.setOnItemClickListener(new NotesAdapter.OnNoteClickListener() {
             @Override
             public void onClickEdit(NoteEntity note) {
-                NoteList.this.onClickEdit(note);
+                NoteListFragment.this.onClickEdit(note);
             }
 
             @Override
             public void onClickDelete(NoteEntity note) {
-                NoteList.this.onClickDelete(note);
+                NoteListFragment.this.onClickDelete(note);
 
             }
         });
-        //TODO переписать получение результата
-        getParentFragmentManager().setFragmentResultListener(NoteEdit.class.getCanonicalName(), getActivity(), new FragmentResultListener() {
+        //Получение результата, можно было просто передавать бандл с ссылкой на репозиторий
+        getParentFragmentManager().setFragmentResultListener(NoteEditFragment.class.getCanonicalName(), getActivity(), new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 if (!(result.isEmpty())) {
@@ -90,9 +97,20 @@ public class NoteList extends Fragment implements NotesAdapter.OnNoteClickListen
 
     @Override
     public void onClickDelete(NoteEntity note) {
-        Toast.makeText(getActivity(), R.string.deleted_note_toast_text, Toast.LENGTH_SHORT).show();
-        repository.removeNote(note.getId());
-        adapter.setData(repository.getAllNotes());
+        ClearDataBaseAgreementDialog confirmation = new ClearDataBaseAgreementDialog();
+        confirmation.show(getParentFragmentManager(), CLEAR_DATABASE);
+        getParentFragmentManager().setFragmentResultListener(ClearDataBaseAgreementDialog.class.getCanonicalName(), getActivity(), new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                Boolean isConfirmed = result.getBoolean(confirmation.AGREEMENT_KEY);
+                if (isConfirmed) {
+                    Toast.makeText(getActivity(), R.string.deleted_note_toast_text, Toast.LENGTH_SHORT).show();
+                    repository.removeNote(note.getId());
+                    adapter.setData(repository.getAllNotes());
+                }
+
+            }
+        });
     }
 
     @Override
@@ -107,21 +125,20 @@ public class NoteList extends Fragment implements NotesAdapter.OnNoteClickListen
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.add_note_menu) {
-            getParentFragmentManager().clearFragmentResult(NoteList.class.getCanonicalName());
+            getParentFragmentManager().clearFragmentResult(NoteListFragment.class.getCanonicalName());
             data = null;
             ((FragmentsCall) requireActivity()).callEditionFragment(data);
             return true;
-        }  else if(item.getItemId()== R.id.settings){
+        } else if (item.getItemId() == R.id.settings) {
             ((FragmentsCall) requireActivity()).callSettingsFragment();
-        }
-        else {
+        } else {
             super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public static NoteList getInstance(Bundle data) {
-        NoteList noteList = new NoteList();
+    public static NoteListFragment getInstance(Bundle data) {
+        NoteListFragment noteList = new NoteListFragment();
         if (!data.isEmpty()) {
             noteList.setArguments(data);
         }

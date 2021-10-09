@@ -1,4 +1,4 @@
-package com.gb.notes;
+package com.gb.notes.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,11 +9,16 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
+
+import com.gb.notes.NotesRepository;
+import com.gb.notes.R;
 
 public class DataManagerFragment extends Fragment {
     ImageButton imageButton;
     private NotesRepository repository;
     private Bundle savedData;
+    public final String CLEAR_DATABASE = "OK";
 
 
     @Nullable
@@ -27,17 +32,28 @@ public class DataManagerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         savedData = getArguments();
         repository = savedData.getParcelable(NotesRepository.class.getCanonicalName());
-        imageButton= view.findViewById(R.id.delete_storage_button);
+        imageButton = view.findViewById(R.id.delete_storage_button);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                repository.getAllNotes().clear();
+                ClearDataBaseAgreementDialog confirmation = new ClearDataBaseAgreementDialog();
+                confirmation.show(getParentFragmentManager(), CLEAR_DATABASE);
+                getParentFragmentManager().setFragmentResultListener(ClearDataBaseAgreementDialog.class.getCanonicalName(), getActivity(), new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        Boolean isConfirmed = result.getBoolean(confirmation.AGREEMENT_KEY);
+                        if (isConfirmed) {
+                            repository.getAllNotes().clear();
+                        }
+                    }
+                });
+
             }
         });
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public static DataManagerFragment getInstance(Bundle data){
+    public static DataManagerFragment getInstance(Bundle data) {
         DataManagerFragment dataManager = new DataManagerFragment();
         if (!data.isEmpty()) {
             dataManager.setArguments(data);

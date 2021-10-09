@@ -1,31 +1,28 @@
 package com.gb.notes;
 
-import android.content.Intent;
-import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.gb.notes.Fragments.DataManagerFragment;
+import com.gb.notes.Fragments.NoteEditFragment;
+import com.gb.notes.Fragments.NoteListFragment;
+import com.gb.notes.Fragments.ProfileFragment;
+import com.gb.notes.Fragments.SettingsFragment;
+import com.gb.notes.Interfaces.FragmentsCall;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,33 +46,38 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
         }
         fragmentManager = getSupportFragmentManager();
         bottomNavigationItemView.setSelectedItemId(R.id.notes_item_menu);
-        if (getResources().getConfiguration().orientation!= Configuration.ORIENTATION_LANDSCAPE){
+        if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
             fragmentManager.popBackStack();
         }
-
     }
 
     private void setNavigation() {
-        bottomNavigationItemView= findViewById(R.id.navigation_bar);
+        bottomNavigationItemView = findViewById(R.id.navigation_bar);
         Bundle savedData = new Bundle();
         savedData.putParcelable(NotesRepository.class.getCanonicalName(), repository);
         bottomNavigationItemView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if(item.getItemId()==R.id.notes_item_menu){
+                if (item.getItemId() == R.id.notes_item_menu) {
                     if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                         fragmentManager.popBackStack();
-                        fragmentManager.beginTransaction().replace(R.id.container_for_fragment_land_1, NoteList.getInstance(savedData)).commit();
+                        fragmentManager.beginTransaction().replace(R.id.container_for_fragment_land_1, NoteListFragment.getInstance(savedData)).commit();
                     } else {
                         fragmentManager.popBackStack();
-                        fragmentManager.beginTransaction().replace(R.id.container_for_fragment, NoteList.getInstance(savedData)).commit();
+                        fragmentManager.beginTransaction().replace(R.id.container_for_fragment, NoteListFragment.getInstance(savedData)).commit();
                     }
-                }
-                else if(item.getItemId()==R.id.data_manager_item_menu){
-                    fragmentManager.beginTransaction().replace(R.id.container_for_fragment, DataManagerFragment.getInstance(savedData)).commit();
-                }
-                else if(item.getItemId()==R.id.profile_item_menu){
-                    fragmentManager.beginTransaction().replace(R.id.container_for_fragment, new ProfileFragment()).commit();
+                } else if (item.getItemId() == R.id.data_manager_item_menu) {
+                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        fragmentManager.beginTransaction().replace(R.id.container_for_fragment_land_1, DataManagerFragment.getInstance(savedData)).commit();
+                    } else {
+                        fragmentManager.beginTransaction().replace(R.id.container_for_fragment, DataManagerFragment.getInstance(savedData)).commit();
+                    }
+                } else if (item.getItemId() == R.id.profile_item_menu) {
+                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        fragmentManager.beginTransaction().replace(R.id.container_for_fragment_land_1, new ProfileFragment()).commit();
+                    } else {
+                        fragmentManager.beginTransaction().replace(R.id.container_for_fragment, new ProfileFragment()).commit();
+                    }
                 }
                 return true;
             }
@@ -86,13 +88,13 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
         FileInputStream fileInputStream = openFileInput(LOCAL_REPOSITORY_NAME);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         int size = objectInputStream.readInt();
-        List<NoteEntity> list =  new ArrayList<>();
+        List<NoteEntity> list = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            list.add((NoteEntity)objectInputStream.readObject());
+            list.add((NoteEntity) objectInputStream.readObject());
             Log.d("@@@", list.toString());
         }
         repository.addAll(list);
-        Log.d("@@@", "size " +repository.getAllNotes().size());
+        Log.d("@@@", "size " + repository.getAllNotes().size());
         objectInputStream.close();
         fileInputStream.close();
         Log.d("@@@", "toInitNotesInRepository: ");
@@ -103,15 +105,19 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
     @Override
     public void callEditionFragment(Bundle data) {
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            fragmentManager.beginTransaction().add(R.id.container_for_fragment_land_2, NoteEdit.getInstance(data)).addToBackStack(null).commit();
+            fragmentManager.beginTransaction().add(R.id.container_for_fragment_land_2, NoteEditFragment.getInstance(data)).addToBackStack(null).commit();
         } else {
-            fragmentManager.beginTransaction().add(R.id.container_for_fragment, NoteEdit.getInstance(data)).addToBackStack(null).commit();
+            fragmentManager.beginTransaction().add(R.id.container_for_fragment, NoteEditFragment.getInstance(data)).addToBackStack(null).commit();
         }
     }
 
     @Override
     public void callSettingsFragment() {
-        fragmentManager.beginTransaction().replace(R.id.container_for_fragment, new  SettingsFragment()).addToBackStack(null).commit();
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            fragmentManager.beginTransaction().replace(R.id.container_for_fragment_land_2, new SettingsFragment()).addToBackStack(null).commit();
+        } else {
+            fragmentManager.beginTransaction().replace(R.id.container_for_fragment, new SettingsFragment()).addToBackStack(null).commit();
+        }
     }
 
 
@@ -119,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
         FileOutputStream fos = openFileOutput(LOCAL_REPOSITORY_NAME, MODE_PRIVATE);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fos);
         objectOutputStream.writeInt(repository.getAllNotes().size());
-        for (NoteEntity note:repository.getAllNotes()) {
+        for (NoteEntity note : repository.getAllNotes()) {
             objectOutputStream.writeObject(note);
         }
         objectOutputStream.close();

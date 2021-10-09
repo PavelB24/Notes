@@ -20,8 +20,14 @@
     <string name="manage_item_menu_title">Data Manager</string>
     <string name="profile_item_menu_title">Profile</string>
     <string name="sort_notes_item_menu_title">Sort Notes</string>
-
     <string name="on_deletion_note_toast">Note is deleted</string>
     <string name="deleted_note_toast_text">Note is deleted</string>
     <string name="edition_mode_toast_text">Edition mode</string>
+    <string name="clear_data_base_dialog_negative_text">Abort</string>
+    <string name="clear_data_base_dialog_positive_text">OK</string>
+    <string name="clear_data_base_dialog_message_text">Confirm action</string>
+    <string name="clear_data_base_dialog_title_text">Are you sure?</string>
+    <string name="delete_all_notes_text">Delete all notes</string>
+    <string name="application_settings_text">Application Settings</string>
+    <string name="sort_by_date_text">Sort by date</string>
 </resources>
