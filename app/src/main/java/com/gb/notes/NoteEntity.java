@@ -14,9 +14,6 @@ public class NoteEntity implements Parcelable, Serializable {
     private String description;
     private int originDay;
     private int originMonth;
-
-
-
     private int originYear;
     private UUID uuid;
 
@@ -81,6 +78,10 @@ public class NoteEntity implements Parcelable, Serializable {
 
     public void setDetail(String detail) {
         this.description = detail;
+    }
+
+    public String getDateAsString(){
+        return originDay+"."+originMonth+"."+originYear;
     }
 
 

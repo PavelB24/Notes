@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Notes</string>
     <string name="warning_toast">Please, writedown title and maintext</string>
-    <string name="add_title_hint">Add title</string>
+    <string name="add_title_hint">Title...</string>
     <string name="select_the_date_of_event">Select the date of event</string>
     <string name="apply_button_text">Apply</string>
     <string name="create_a_note_menu_button_text">Create a note</string>
@@ -30,4 +30,7 @@
     <string name="delete_all_notes_text">Delete all notes</string>
     <string name="application_settings_text">Application Settings</string>
     <string name="sort_by_date_text">Sort by date</string>
+    <string name="notes_description_hint_text">Text...</string>
+    <string name="search_item_menu_text">Search</string>
+    <string name="note_view_fragment_back_button_text">Back</string>
 </resources>

@@ -15,5 +15,6 @@ public class NoteViewHolder extends RecyclerView.ViewHolder {
     public TextView titleTextView = itemView.findViewById(R.id.note_title_textview);
     public TextView descriptionTextView = itemView.findViewById(R.id.note_description_textview);
     public ImageButton deleteImageButton= itemView.findViewById(R.id.delete_note_image_button);
+    public ImageButton editImageButton= itemView.findViewById(R.id.edit_item_button);
 
 }

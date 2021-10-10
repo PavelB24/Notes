@@ -12,6 +12,10 @@
         android:id="@+id/profile_item_menu"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="@string/profile_item_menu_title" />
+    <item
+        android:id="@+id/search_item_menu"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="@string/search_item_menu_text" />
 
 
 </menu>

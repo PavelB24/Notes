@@ -67,6 +67,11 @@ public class NoteListFragment extends Fragment implements NotesAdapter.OnNoteCli
                 NoteListFragment.this.onClickDelete(note);
 
             }
+
+            @Override
+            public void onNoteClick(NoteEntity note) {
+                NoteListFragment.this.onNoteClick(note);
+            }
         });
         //Получение результата, можно было просто передавать бандл с ссылкой на репозиторий
         getParentFragmentManager().setFragmentResultListener(NoteEditFragment.class.getCanonicalName(), getActivity(), new FragmentResultListener() {
@@ -111,6 +116,13 @@ public class NoteListFragment extends Fragment implements NotesAdapter.OnNoteCli
 
             }
         });
+    }
+
+    @Override
+    public void onNoteClick(NoteEntity note) {
+        data = new Bundle();
+        data.putParcelable(NoteEntity.class.getCanonicalName(), note);
+        ((FragmentsCall) requireActivity()).callNoteViewFragment(data);
     }
 
     @Override
