@@ -33,4 +33,5 @@
     <string name="notes_description_hint_text">Text...</string>
     <string name="search_item_menu_text">Search</string>
     <string name="note_view_fragment_back_button_text">Back</string>
+    <string name="unsuccessful_search_toast_text">Search was unsuccessful</string>
 </resources>

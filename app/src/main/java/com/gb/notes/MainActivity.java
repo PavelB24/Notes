@@ -81,13 +81,6 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
                         fragmentManager.beginTransaction().replace(R.id.container_for_fragment, new ProfileFragment()).commit();
                     }
                     fragmentManager.popBackStack();
-                } else if(item.getItemId() == R.id.search_item_menu){
-                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                        fragmentManager.beginTransaction().replace(R.id.container_for_fragment_land_1, new SearchFragment()).commit();
-                    } else {
-                        fragmentManager.beginTransaction().replace(R.id.container_for_fragment, new SearchFragment()).commit();
-                    }
-                    fragmentManager.popBackStack();
                 }
                 return true;
             }
@@ -125,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
 
     @Override
     public void callSettingsFragment() {
+        //TODO вписать этот вызов в настройки профиля
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             fragmentManager.beginTransaction().replace(R.id.container_for_fragment_land_2, new SettingsFragment()).addToBackStack(null).commit();
         } else {

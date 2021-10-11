@@ -2,6 +2,7 @@ package com.gb.notes;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.gb.notes.Interfaces.NotesRepositoryInterface;
 
@@ -9,7 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NotesRepository implements NotesRepositoryInterface, Parcelable{
+    public final String TAG = "@@@";
     private ArrayList<NoteEntity> notesList= new ArrayList<>();
+    private  ArrayList<NoteEntity> searchCache = new ArrayList<>();
+
+    public ArrayList<NoteEntity> getSearchResult() {
+        return  searchCache;
+    }
 
     @Override
     public ArrayList<NoteEntity> getAllNotes() {
@@ -82,4 +89,23 @@ public class NotesRepository implements NotesRepositoryInterface, Parcelable{
         }
     };
 
-}
+    public void setAllMatches(String query) {
+        //todo
+        searchCache.clear();
+        int size = query.length();
+        for (NoteEntity note: notesList) {
+            String title=note.getTitle();
+            if(size>title.length()){return; }
+            for (int i = 0; i <size ; i++) {
+                if(title.charAt(i)!=(query.charAt(i))){
+                    Log.d(TAG, "Не совпало " + title);
+                }
+                else{
+                    if(i==size-1){
+                    Log.d(TAG, "добавляю");
+                    searchCache.add(note);}
+            }
+        }
+
+    }
+}}

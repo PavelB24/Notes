@@ -1,12 +1,14 @@
 package com.gb.notes.Fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +34,7 @@ public class NoteListFragment extends Fragment implements NotesAdapter.OnNoteCli
     private androidx.appcompat.widget.Toolbar toolbar;
     private Bundle data;
     private Bundle savedData;
+    private SearchView searchView;
     public final String TAG = "@@@";
     public final String CLEAR_DATABASE = "OK";
 
@@ -54,6 +57,7 @@ public class NoteListFragment extends Fragment implements NotesAdapter.OnNoteCli
         recyclerView.setAdapter(adapter);
         adapter.setData(repository.getAllNotes());
         toolbar = view.findViewById(R.id.toolbar);
+        searchView=view.findViewById(R.id.search_item_menu);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         //Мы передаём интерфейс с методом, логика которого прописана в активити (а теперь в фрагменте)
         adapter.setOnItemClickListener(new NotesAdapter.OnNoteClickListener() {
@@ -102,9 +106,9 @@ public class NoteListFragment extends Fragment implements NotesAdapter.OnNoteCli
 
     @Override
     public void onClickDelete(NoteEntity note) {
-        ClearDataBaseAgreementDialog confirmation = new ClearDataBaseAgreementDialog();
+        AgreementDialog confirmation = new AgreementDialog();
         confirmation.show(getParentFragmentManager(), CLEAR_DATABASE);
-        getParentFragmentManager().setFragmentResultListener(ClearDataBaseAgreementDialog.class.getCanonicalName(), getActivity(), new FragmentResultListener() {
+        getParentFragmentManager().setFragmentResultListener(AgreementDialog.class.getCanonicalName(), getActivity(), new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 Boolean isConfirmed = result.getBoolean(confirmation.AGREEMENT_KEY);
@@ -129,6 +133,29 @@ public class NoteListFragment extends Fragment implements NotesAdapter.OnNoteCli
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         if (!menu.hasVisibleItems()) {
             inflater.inflate(R.menu.notes_list_menu, menu);
+            MenuItem searchItem=menu.findItem(R.id.search_item_menu);
+            searchView= (SearchView) searchItem.getActionView();
+            //TODO настроить поиск
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    Log.d(TAG, searchView.getQuery().toString());
+                    repository.setAllMatches(searchView.getQuery().toString());
+                    if(!repository.getSearchResult().isEmpty()){
+                        Log.d(TAG, repository.getSearchResult().toString());
+                        adapter.setData(repository.getSearchResult());
+                    }
+                    else {
+                        Toast.makeText(getContext(), R.string.unsuccessful_search_toast_text, Toast.LENGTH_SHORT).show();
+                    }
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    return false;
+                }
+            });
         }
         super.onCreateOptionsMenu(menu, inflater);
 
@@ -136,14 +163,17 @@ public class NoteListFragment extends Fragment implements NotesAdapter.OnNoteCli
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.add_note_menu) {
+        if (item.getItemId() == R.id.add_note_item_menu) {
             getParentFragmentManager().clearFragmentResult(NoteListFragment.class.getCanonicalName());
             data = null;
             ((FragmentsCall) requireActivity()).callEditionFragment(data);
             return true;
-        } else if (item.getItemId() == R.id.settings) {
-            ((FragmentsCall) requireActivity()).callSettingsFragment();
-        } else {
+        } else if (item.getItemId() == R.id.refresh_item_menu) {
+            adapter.setData(repository.getAllNotes());
+        } else if(item.getItemId() == R.id.search_item_menu){
+            //TODO
+        }
+        else {
             super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);

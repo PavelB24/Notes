@@ -36,9 +36,9 @@ public class DataManagerFragment extends Fragment {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ClearDataBaseAgreementDialog confirmation = new ClearDataBaseAgreementDialog();
+                AgreementDialog confirmation = new AgreementDialog();
                 confirmation.show(getParentFragmentManager(), CLEAR_DATABASE);
-                getParentFragmentManager().setFragmentResultListener(ClearDataBaseAgreementDialog.class.getCanonicalName(), getActivity(), new FragmentResultListener() {
+                getParentFragmentManager().setFragmentResultListener(AgreementDialog.class.getCanonicalName(), getActivity(), new FragmentResultListener() {
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                         Boolean isConfirmed = result.getBoolean(confirmation.AGREEMENT_KEY);

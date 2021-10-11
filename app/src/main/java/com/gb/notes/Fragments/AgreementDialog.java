@@ -11,7 +11,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.gb.notes.R;
 
-public class ClearDataBaseAgreementDialog extends DialogFragment {
+public class AgreementDialog extends DialogFragment {
     public String AGREEMENT_KEY = "OK";
 
     @NonNull
@@ -26,7 +26,7 @@ public class ClearDataBaseAgreementDialog extends DialogFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Bundle result = new Bundle();
                         result.putBoolean(AGREEMENT_KEY, true);
-                        getParentFragmentManager().setFragmentResult(ClearDataBaseAgreementDialog.class.getCanonicalName(), result);
+                        getParentFragmentManager().setFragmentResult(AgreementDialog.class.getCanonicalName(), result);
                     }
                 })
                 .setNegativeButton(R.string.clear_data_base_dialog_negative_text, null).create();
