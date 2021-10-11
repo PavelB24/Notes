@@ -9,13 +9,13 @@ import com.gb.notes.Interfaces.NotesRepositoryInterface;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotesRepository implements NotesRepositoryInterface, Parcelable{
+public class NotesRepository implements NotesRepositoryInterface, Parcelable {
     public final String TAG = "@@@";
-    private ArrayList<NoteEntity> notesList= new ArrayList<>();
-    private  ArrayList<NoteEntity> searchCache = new ArrayList<>();
+    private final ArrayList<NoteEntity> notesList = new ArrayList<>();
+    private final ArrayList<NoteEntity> searchCache = new ArrayList<>();
 
     public ArrayList<NoteEntity> getSearchResult() {
-        return  searchCache;
+        return searchCache;
     }
 
     @Override
@@ -36,21 +36,19 @@ public class NotesRepository implements NotesRepositoryInterface, Parcelable{
 
     @Override
     public boolean removeNote(String id) {
-        for (int i = 0; i < notesList.size() ; i++) {
-            if(notesList.get(i).getId().equals(id)){
+        for (int i = 0; i < notesList.size(); i++) {
+            if (notesList.get(i).getId().equals(id)) {
                 notesList.remove(i);
                 return true;
             }
-        } return false;
+        }
+        return false;
     }
 
 
-
-
-
-    public boolean findById(String id){
-        for (int i = 0; i <notesList.size() ; i++) {
-            if(notesList.get(i).getId().equals(id)){
+    public boolean findById(String id) {
+        for (int i = 0; i < notesList.size(); i++) {
+            if (notesList.get(i).getId().equals(id)) {
                 return true;
             }
         }
@@ -77,6 +75,7 @@ public class NotesRepository implements NotesRepositoryInterface, Parcelable{
         parcel.writeList(notesList);
 
     }
+
     public static final Parcelable.Creator<NotesRepository> CREATOR = new Creator<NotesRepository>() {
         @Override
         public NotesRepository createFromParcel(Parcel parcel) {
@@ -93,19 +92,22 @@ public class NotesRepository implements NotesRepositoryInterface, Parcelable{
         //todo
         searchCache.clear();
         int size = query.length();
-        for (NoteEntity note: notesList) {
-            String title=note.getTitle();
-            if(size>title.length()){return; }
-            for (int i = 0; i <size ; i++) {
-                if(title.charAt(i)!=(query.charAt(i))){
-                    Log.d(TAG, "Не совпало " + title);
-                }
-                else{
-                    if(i==size-1){
-                    Log.d(TAG, "добавляю");
-                    searchCache.add(note);}
+        for (NoteEntity note : notesList) {
+            String title = note.getTitle();
+            if (size > title.length()) {
+                return;
             }
-        }
+            for (int i = 0; i < size; i++) {
+                if (title.charAt(i) != (query.charAt(i))) {
+                    Log.d(TAG, "Не совпало " + title);
+                } else {
+                    if (i == size - 1) {
+                        Log.d(TAG, "добавляю" + title);
+                        searchCache.add(note);
+                    }
+                }
+            }
 
+        }
     }
-}}
+}

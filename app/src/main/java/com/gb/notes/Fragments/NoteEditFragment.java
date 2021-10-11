@@ -28,7 +28,6 @@ public class NoteEditFragment extends Fragment {
     Bundle data;
 
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -74,14 +73,14 @@ public class NoteEditFragment extends Fragment {
             note = data.getParcelable(NoteEntity.class.getCanonicalName());
             titleEditText.setText(note.getTitle());
             descriptionEditText.setText(note.getDetail());
-            datePicker.updateDate(note.getOriginYear(), note.getOriginMonth()-1, note.getOriginDay());
+            datePicker.updateDate(note.getOriginYear(), note.getOriginMonth() - 1, note.getOriginDay());
 
         }
     }
 
     private boolean toCheckIfEdit() {
         //Если есть бандл с классом заметка
-        if (!(getArguments()==null)) {
+        if (!(getArguments() == null)) {
             if (data == null) {
                 data = getArguments();
             }

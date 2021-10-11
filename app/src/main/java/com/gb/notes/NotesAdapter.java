@@ -1,7 +1,6 @@
 package com.gb.notes;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import com.gb.notes.Interfaces.OnNoteClickListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,18 +46,15 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
                 listener.onNoteClick(note);
             }
         });
-        holder.deleteImageButton.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View view) {
-                listener.onClickDelete(note);
+            public boolean onLongClick(View view) {
+                //TODO
+                listener.onNoteLongClick(note, view);
+                return true;
             }
         });
-        holder.editImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onClickEdit(note);
-            }
-        });
+
 
     }
 
@@ -78,13 +73,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
 
     }
 
-    public interface OnNoteClickListener {
-        void onClickEdit(NoteEntity note);
-
-        void onClickDelete(NoteEntity note);
-
-        void onNoteClick(NoteEntity note);
-    }
 
 
 

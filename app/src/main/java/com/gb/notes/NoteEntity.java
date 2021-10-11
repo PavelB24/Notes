@@ -25,6 +25,7 @@ public class NoteEntity implements Parcelable, Serializable {
         this.originMonth = originMonth + 1;
         this.originYear = originYear;
     }
+
     public int getOriginDay() {
         return originDay;
     }
@@ -48,6 +49,7 @@ public class NoteEntity implements Parcelable, Serializable {
     public void setOriginYear(int originYear) {
         this.originYear = originYear;
     }
+
     private NoteEntity(Parcel in) {
         id = in.readString();
         title = in.readString();
@@ -80,8 +82,8 @@ public class NoteEntity implements Parcelable, Serializable {
         this.description = detail;
     }
 
-    public String getDateAsString(){
-        return originDay+"."+originMonth+"."+originYear;
+    public String getDateAsString() {
+        return originDay + "." + originMonth + "." + originYear;
     }
 
 

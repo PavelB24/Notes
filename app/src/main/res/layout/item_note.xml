@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true"
-    android:padding="8dp">
+    style="@style/frame_layout_for_item_note_style">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="8dp"
-        android:padding="8dp"
-        app:cardBackgroundColor="@color/cardview_grey"
-        app:cardCornerRadius="16dp"
-        app:cardUseCompatPadding="true">
+        app:cardBackgroundColor="@color/card_view_grey"
+        app:cardCornerRadius="@dimen/item_notes_corner_radius"
+        app:cardUseCompatPadding="true"
+        style="@style/item_notes_card_view_style">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,45 +23,19 @@
                 android:layout_height="match_parent"
                 android:background="?selectableItemBackground"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="@dimen/standart_padding">
 
 
                 <TextView
                     android:id="@+id/note_title_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="28sp"
-                    android:textStyle="bold" />
+                    style="@style/item_notes_title_textview" />
 
                 <TextView
                     android:id="@+id/note_description_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:textColor="@color/black" />
+                    style="@style/item_notes_description_textview" />
             </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/delete_note_image_button"
-                android:layout_width="50dp"
-                android:layout_weight="0"
-                android:layout_height="match_parent"
-                android:layout_marginStart="6dp"
-                android:background="?selectableItemBackground"
-                android:src="@drawable/ic_delete_icon" />
-            <ImageButton
-                android:id="@+id/edit_item_button"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:background="?selectableItemBackground"
-                android:src="@drawable/ic_baseline_edit_24"
-                android:tintMode="src_atop"
-                app:tint="#202020" />
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

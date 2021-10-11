@@ -51,4 +51,53 @@
         <item name="android:textColor">#18205E</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="item_notes_del_button">
+        <item name="android:layout_width">@dimen/item_notes_buttons_width</item>
+        <item name="android:layout_weight">0</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginStart">6dp</item>
+        <item name="android:background">?selectableItemBackground</item>
+    </style>
+
+    <style name="item_notes_edit_button">
+        <item name="android:layout_width">@dimen/item_notes_buttons_width</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">?selectableItemBackground</item>
+        <item name="android:tintMode">src_atop</item>
+    </style>
+
+    <style name="item_notes_title_textview">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="item_notes_description_textview">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="item_notes_card_view_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:elevation">8dp</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="frame_layout_for_item_note_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:padding">@dimen/halfed_padding</item>
+    </style>
 </resources>

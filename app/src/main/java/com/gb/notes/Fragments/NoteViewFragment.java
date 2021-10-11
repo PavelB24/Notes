@@ -31,10 +31,10 @@ public class NoteViewFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        title= view.findViewById(R.id.note_title_text_view);
-        description= view.findViewById(R.id.note_description_textview);
-        date= view.findViewById(R.id.date_of_event_textview);
-        backButton= view.findViewById(R.id.note_view_fragment_back_button);
+        title = view.findViewById(R.id.note_title_text_view);
+        description = view.findViewById(R.id.note_description_textview);
+        date = view.findViewById(R.id.date_of_event_textview);
+        backButton = view.findViewById(R.id.note_view_fragment_back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,13 +47,13 @@ public class NoteViewFragment extends Fragment {
 
     private void toFillTheFields() {
         Bundle data = getArguments();
-        note= data.getParcelable(NoteEntity.class.getCanonicalName());
+        note = data.getParcelable(NoteEntity.class.getCanonicalName());
         title.setText(note.getTitle());
         description.setText(note.getDetail());
         date.setText(note.getDateAsString());
     }
 
-    public static NoteViewFragment getInstance(Bundle data){
+    public static NoteViewFragment getInstance(Bundle data) {
         NoteViewFragment noteViewFragment = new NoteViewFragment();
         noteViewFragment.setArguments(data);
         return noteViewFragment;

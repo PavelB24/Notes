@@ -8,6 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="toolbar_grey">#78909c</color>
-    <color name="cardview_grey">#A8546E7A</color>
+    <color name="card_view_grey">#A8546E7A</color>
     <color name="apply_button_color">#659C27B0</color>
 </resources>

@@ -14,7 +14,6 @@ import com.gb.notes.Fragments.NoteEditFragment;
 import com.gb.notes.Fragments.NoteListFragment;
 import com.gb.notes.Fragments.NoteViewFragment;
 import com.gb.notes.Fragments.ProfileFragment;
-import com.gb.notes.Fragments.SearchFragment;
 import com.gb.notes.Fragments.SettingsFragment;
 import com.gb.notes.Interfaces.FragmentsCall;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -134,7 +133,6 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
             fragmentManager.beginTransaction().add(R.id.container_for_fragment, NoteViewFragment.getInstance(data)).addToBackStack(null).commit();
         }
     }
-
 
 
     private void serializeNotes() throws IOException {
