@@ -103,7 +103,7 @@ public class NotesRepository implements NotesRepositoryInterface, Parcelable {
                     break;
                 } else {
                     if (i == size - 1) {
-                        Log.d(TAG, "добавляю" + title);
+                        Log.d(TAG, "добавляю " + title);
                         searchCache.add(note);
                     }
                 }

@@ -143,11 +143,10 @@ public class NoteListFragment extends Fragment implements OnNoteClickListener {
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                if(menuItem.getItemId()==R.id.delete_note_item){
+                if (menuItem.getItemId() == R.id.delete_note_item) {
                     onClickDelete(note);
-                }
-                else if(menuItem.getItemId()==R.id.edit_note_item){
-                   onClickEdit(note);
+                } else if (menuItem.getItemId() == R.id.edit_note_item) {
+                    onClickEdit(note);
 
                 }
                 return false;
@@ -156,7 +155,6 @@ public class NoteListFragment extends Fragment implements OnNoteClickListener {
         popupMenu.show();
         //TODO
     }
-
 
 
     @Override
