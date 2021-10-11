@@ -37,8 +37,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     //А этот метод переносит данные из объекта в поля холдера (поля в данном случае 2 текствьюшки из основной вьюшки холдера)
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
         NoteEntity note = getNote(position);
-        holder.titleTextView.setText(note.getTitle());
-        holder.descriptionTextView.setText(note.getDetail());
+        setTextInHolderItems(holder, note);
+        setHolderItemsListeners(holder, note);
+    }
+
+    private void setHolderItemsListeners(NoteViewHolder holder, NoteEntity note) {
         //Ставим обработку для каждого холдера, вызывая кликлисенер вьюшки-> передаём метод из интерфейса listener, а в метод кладём заметку note, созданную выше в методе
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,8 +57,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
                 return true;
             }
         });
+    }
 
-
+    private void setTextInHolderItems(NoteViewHolder holder, NoteEntity note) {
+        holder.titleTextView.setText(note.getTitle());
+        holder.descriptionTextView.setText(note.getDetail());
     }
 
     public NoteEntity getNote(int position) {
@@ -67,7 +73,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         return data.size();
     }
 
-    //Мы принимаем интерфейс из активити и ставим его в поля класса для дальнейшей работы
+    //Мы принимаем интерфейс из активити(фрагмента) и ставим его в поля класса для дальнейшей работы
     public void setOnItemClickListener(OnNoteClickListener listener) {
         this.listener = listener;
 

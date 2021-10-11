@@ -10,4 +10,6 @@
     <color name="toolbar_grey">#78909c</color>
     <color name="card_view_grey">#A8546E7A</color>
     <color name="apply_button_color">#659C27B0</color>
+    <color name="back_button_color">#9C000000</color>
+    <color name="dark_grey">#252525</color>
 </resources>
