@@ -143,13 +143,21 @@ public class NoteListFragment extends Fragment implements OnNoteClickListener {
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                Toast.makeText(getActivity(), "Test", Toast.LENGTH_SHORT).show();
+                if(menuItem.getItemId()==R.id.delete_note_item){
+                    onClickDelete(note);
+                }
+                else if(menuItem.getItemId()==R.id.edit_note_item){
+                   onClickEdit(note);
+
+                }
                 return false;
             }
         });
         popupMenu.show();
         //TODO
     }
+
+
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {

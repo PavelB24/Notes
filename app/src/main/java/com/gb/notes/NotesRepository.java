@@ -100,6 +100,7 @@ public class NotesRepository implements NotesRepositoryInterface, Parcelable {
             for (int i = 0; i < size; i++) {
                 if (title.charAt(i) != (query.charAt(i))) {
                     Log.d(TAG, "Не совпало " + title);
+                    break;
                 } else {
                     if (i == size - 1) {
                         Log.d(TAG, "добавляю" + title);
