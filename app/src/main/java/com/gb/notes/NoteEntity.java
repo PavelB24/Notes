@@ -54,6 +54,9 @@ public class NoteEntity implements Parcelable, Serializable {
         id = in.readString();
         title = in.readString();
         description = in.readString();
+        originDay= in.readInt();
+        originMonth= in.readInt();
+        originYear= in.readInt();
     }
 
     public void setId(String id) {
@@ -97,6 +100,9 @@ public class NoteEntity implements Parcelable, Serializable {
         parcel.writeString(id);
         parcel.writeString(title);
         parcel.writeString(description);
+        parcel.writeInt(originDay);
+        parcel.writeInt(originMonth);
+        parcel.writeInt(originYear);
     }
 
 

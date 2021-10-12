@@ -92,6 +92,7 @@ public class NoteListFragment extends Fragment implements OnNoteClickListener {
                     tempNote = result.getParcelable(NoteEntity.class.getCanonicalName());
                     if (!repository.findById(tempNote.getId())) {
                         repository.addNote(tempNote);
+                        Log.d(TAG, repository.getAllNotes().toString()+1);
                         adapter.setData(repository.getAllNotes());
                     } else {
                         repository.updateNote(tempNote.getId(), tempNote);

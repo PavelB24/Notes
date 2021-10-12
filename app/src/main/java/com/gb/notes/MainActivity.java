@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
     private BottomNavigationView bottomNavigationItemView;
     private final String LOCAL_REPOSITORY_NAME = "repo.bin";
 
-
+    //TODO модернизировать поиск
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

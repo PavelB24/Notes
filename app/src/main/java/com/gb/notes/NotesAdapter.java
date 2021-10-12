@@ -1,11 +1,13 @@
 package com.gb.notes;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gb.notes.Interfaces.OnNoteClickListener;
@@ -26,12 +28,18 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         return new NoteViewHolder(view);
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+
     //Передаём в класс дату из репозитория, чтобы работать с ней далее
-    public void setData(List<NoteEntity> data) {
-        this.data = data;
-        notifyDataSetChanged();
+    public void setData(List<NoteEntity> dataFromRepo) {
+        Log.d(TAG, dataFromRepo.toString() +2);
+        Log.d(TAG, data.toString()+ 3);
+        DiffUtil.DiffResult result = DiffUtil.calculateDiff(new NotesDiffCallback(data, dataFromRepo), true);
+        data= dataFromRepo;
+        result.dispatchUpdatesTo(this);
+
+
     }
+
 
     @Override
     //А этот метод переносит данные из объекта в поля холдера (поля в данном случае 2 текствьюшки из основной вьюшки холдера)
@@ -78,8 +86,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         this.listener = listener;
 
     }
-
-
 
 
 }
