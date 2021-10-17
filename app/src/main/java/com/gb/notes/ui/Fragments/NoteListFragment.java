@@ -184,6 +184,13 @@ public class NoteListFragment extends Fragment implements OnNoteClickListener {
                     return false;
                 }
             });
+            searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+                @Override
+                public boolean onClose() {
+                    adapter.setData(repository.getAllNotes());
+                    return false;
+                }
+            });
         }
         super.onCreateOptionsMenu(menu, inflater);
 

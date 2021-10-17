@@ -97,12 +97,12 @@ public class NotesRepository implements NotesRepositoryInterface, Parcelable {
         searchCache.clear();
         int size = query.length();
         for (NoteEntity note : notesList) {
-            String title = note.getTitle();
+            String title = note.getTitle().toLowerCase();
             if (size > title.length()) {
                 return;
             }
             for (int i = 0; i < size; i++) {
-                if (title.charAt(i) != (query.charAt(i))) {
+                if (title.charAt(i) != (query.toLowerCase().charAt(i))) {
                     Log.d(TAG, "Не совпало " + title);
                     break;
                 } else {

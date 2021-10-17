@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
         Log.d("@@@", "size " + getRepo().getAllNotes().size());
         objectInputStream.close();
         fileInputStream.close();
-        Log.d("@@@", "toInitNotesInRepository: ");
+        Log.d("@@@", "Восстановлен");
 
 
     }
