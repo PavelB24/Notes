@@ -15,7 +15,6 @@ public class NoteEntity implements Parcelable, Serializable {
     private int originDay;
     private int originMonth;
     private int originYear;
-    private UUID uuid;
 
     public NoteEntity(String id, String title, String detail, int originDay, int originMonth, int originYear) {
         this.id = id;

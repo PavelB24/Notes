@@ -42,4 +42,7 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    // https://mvnrepository.com/artifact/com.squareup.moshi/moshi
+    implementation group: 'com.squareup.moshi', name: 'moshi', version: '1.12.0'
+
 }

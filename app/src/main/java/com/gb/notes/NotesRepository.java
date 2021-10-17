@@ -8,7 +8,6 @@ import com.gb.notes.Interfaces.NotesRepositoryInterface;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class NotesRepository implements NotesRepositoryInterface, Parcelable {
     public final String TAG = "@@@";
@@ -16,12 +15,12 @@ public class NotesRepository implements NotesRepositoryInterface, Parcelable {
     private final ArrayList<NoteEntity> searchCache = new ArrayList<>();
 
     public ArrayList<NoteEntity> getSearchResult() {
-        return searchCache;
+        return new ArrayList<>(searchCache);
     }
 
     @Override
     public ArrayList<NoteEntity> getAllNotes() {
-        return new ArrayList(notesList);
+        return new ArrayList<>(notesList);
     }
 
     @Override
@@ -92,11 +91,9 @@ public class NotesRepository implements NotesRepositoryInterface, Parcelable {
     public void setAllMatches(String query) {
         //todo
         searchCache.clear();
-        query.toLowerCase();
         int size = query.length();
         for (NoteEntity note : notesList) {
             String title = note.getTitle();
-            title.toLowerCase();
             if (size > title.length()) {
                 return;
             }

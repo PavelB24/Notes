@@ -3,7 +3,9 @@ package com.gb.notes;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +20,8 @@ import com.gb.notes.Fragments.SettingsFragment;
 import com.gb.notes.Interfaces.FragmentsCall;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -32,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
     private NotesRepository repository;
     private BottomNavigationView bottomNavigationItemView;
     private final String LOCAL_REPOSITORY_NAME = "repo.bin";
+
+
+
 
     //TODO модернизировать поиск
     @Override
@@ -87,12 +94,15 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
     }
 
     private void toInitNotesInRepository() throws IOException, ClassNotFoundException {
+        Moshi moshi = new Moshi.Builder().build();
+        JsonAdapter<NoteEntity> jsonAdapter = moshi.adapter(NoteEntity.class);
         FileInputStream fileInputStream = openFileInput(LOCAL_REPOSITORY_NAME);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         int size = objectInputStream.readInt();
         List<NoteEntity> list = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            list.add((NoteEntity) objectInputStream.readObject());
+            String json = (String) objectInputStream.readObject();
+            list.add(jsonAdapter.fromJson(json));
             Log.d("@@@", list.toString());
         }
         repository.addAll(list);
@@ -138,9 +148,13 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
     private void serializeNotes() throws IOException {
         FileOutputStream fos = openFileOutput(LOCAL_REPOSITORY_NAME, MODE_PRIVATE);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fos);
+        Moshi moshi = new Moshi.Builder().build();
+        JsonAdapter<NoteEntity> jsonAdapter = moshi.adapter(NoteEntity.class);
         objectOutputStream.writeInt(repository.getAllNotes().size());
+        String json = null;
         for (NoteEntity note : repository.getAllNotes()) {
-            objectOutputStream.writeObject(note);
+            json= jsonAdapter.toJson(note);
+            objectOutputStream.writeObject(json);
         }
         objectOutputStream.close();
         fos.close();
@@ -156,5 +170,11 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
             e.printStackTrace();
         }
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Toast.makeText(this, "До свидания!", Toast.LENGTH_SHORT).show();
+        super.onDestroy();
     }
 }
