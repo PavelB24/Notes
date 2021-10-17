@@ -1,10 +1,10 @@
-package com.gb.notes;
+package com.gb.notes.domain;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.gb.notes.Interfaces.NotesRepositoryInterface;
+import com.gb.notes.domain.Interfaces.NotesRepositoryInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,10 @@ public class NotesRepository implements NotesRepositoryInterface, Parcelable {
 
     public ArrayList<NoteEntity> getSearchResult() {
         return new ArrayList<>(searchCache);
+    }
+
+    public void deleteNoteList(){
+        notesList.clear();
     }
 
     @Override

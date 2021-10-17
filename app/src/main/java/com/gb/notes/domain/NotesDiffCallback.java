@@ -1,6 +1,4 @@
-package com.gb.notes;
-
-import android.util.Log;
+package com.gb.notes.domain;
 
 import androidx.recyclerview.widget.DiffUtil;
 

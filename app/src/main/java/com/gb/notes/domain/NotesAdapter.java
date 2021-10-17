@@ -1,6 +1,5 @@
-package com.gb.notes;
+package com.gb.notes.domain;
 
-import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gb.notes.Interfaces.OnNoteClickListener;
+import com.gb.notes.domain.Interfaces.OnNoteClickListener;
+import com.gb.notes.R;
 
 import java.util.ArrayList;
 import java.util.List;

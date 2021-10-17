@@ -1,4 +1,4 @@
-package com.gb.notes.Fragments;
+package com.gb.notes.ui.Fragments;
 
 import android.app.Dialog;
 import android.content.DialogInterface;

@@ -1,4 +1,4 @@
-package com.gb.notes.Fragments;
+package com.gb.notes.ui.Fragments;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -20,11 +20,11 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gb.notes.Interfaces.FragmentsCall;
-import com.gb.notes.Interfaces.OnNoteClickListener;
-import com.gb.notes.NoteEntity;
-import com.gb.notes.NotesAdapter;
-import com.gb.notes.NotesRepository;
+import com.gb.notes.domain.Interfaces.FragmentsCall;
+import com.gb.notes.domain.Interfaces.OnNoteClickListener;
+import com.gb.notes.domain.NoteEntity;
+import com.gb.notes.domain.NotesAdapter;
+import com.gb.notes.domain.NotesRepository;
 import com.gb.notes.R;
 
 
@@ -105,7 +105,7 @@ public class NoteListFragment extends Fragment implements OnNoteClickListener {
 
     @Override
     public void onClickEdit(NoteEntity note) {
-        Toast.makeText(getActivity(), R.string.edition_mode_toast_text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), R.string.edition_mode_toast_text, Toast.LENGTH_SHORT).show();  Toast.makeText(getActivity(), R.string.edition_mode_toast_text, Toast.LENGTH_SHORT).show();
         data = new Bundle();
         data.putParcelable(NoteEntity.class.getCanonicalName(), note);
         ((FragmentsCall) requireActivity()).callEditionFragment(data);

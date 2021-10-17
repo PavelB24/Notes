@@ -1,4 +1,4 @@
-package com.gb.notes.Fragments;
+package com.gb.notes.ui.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.gb.notes.NoteEntity;
+import com.gb.notes.domain.NoteEntity;
 import com.gb.notes.R;
 
 public class NoteViewFragment extends Fragment {

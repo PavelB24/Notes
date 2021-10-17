@@ -1,4 +1,4 @@
-package com.gb.notes;
+package com.gb.notes.domain;
 
 import android.view.View;
 import android.widget.ImageButton;
@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.gb.notes.R;
 
 //Класс нужен лишь для того, чтоб хранить ссылки на вьюшки и не нагружать систему(???)
 public class NoteViewHolder extends RecyclerView.ViewHolder {

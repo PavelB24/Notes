@@ -1,9 +1,8 @@
-package com.gb.notes;
+package com.gb.notes.domain;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -11,13 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
-import com.gb.notes.Fragments.DataManagerFragment;
-import com.gb.notes.Fragments.NoteEditFragment;
-import com.gb.notes.Fragments.NoteListFragment;
-import com.gb.notes.Fragments.NoteViewFragment;
-import com.gb.notes.Fragments.ProfileFragment;
-import com.gb.notes.Fragments.SettingsFragment;
-import com.gb.notes.Interfaces.FragmentsCall;
+import com.gb.notes.ui.Fragments.DataManagerFragment;
+import com.gb.notes.ui.Fragments.NoteEditFragment;
+import com.gb.notes.ui.Fragments.NoteListFragment;
+import com.gb.notes.ui.Fragments.NoteViewFragment;
+import com.gb.notes.ui.Fragments.ProfileFragment;
+import com.gb.notes.ui.Fragments.SettingsFragment;
+import com.gb.notes.domain.Interfaces.FragmentsCall;
+import com.gb.notes.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.squareup.moshi.JsonAdapter;
@@ -33,7 +33,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements FragmentsCall {
     private FragmentManager fragmentManager;
-    private NotesRepository repository;
     private BottomNavigationView bottomNavigationItemView;
     private final String LOCAL_REPOSITORY_NAME = "repo.bin";
 
@@ -45,12 +44,13 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
-        repository = new NotesRepository();
         setNavigation();
+        if(getRepo().getAllNotes().isEmpty()) {
         try {
             toInitNotesInRepository();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+        }
         }
         fragmentManager = getSupportFragmentManager();
         bottomNavigationItemView.setSelectedItemId(R.id.notes_item_menu);
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
     private void setNavigation() {
         bottomNavigationItemView = findViewById(R.id.navigation_bar);
         Bundle savedData = new Bundle();
-        savedData.putParcelable(NotesRepository.class.getCanonicalName(), repository);
+        savedData.putParcelable(NotesRepository.class.getCanonicalName(), getRepo());
         bottomNavigationItemView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -105,8 +105,8 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
             list.add(jsonAdapter.fromJson(json));
             Log.d("@@@", list.toString());
         }
-        repository.addAll(list);
-        Log.d("@@@", "size " + repository.getAllNotes().size());
+        getRepo().addAll(list);
+        Log.d("@@@", "size " + getRepo().getAllNotes().size());
         objectInputStream.close();
         fileInputStream.close();
         Log.d("@@@", "toInitNotesInRepository: ");
@@ -150,15 +150,19 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fos);
         Moshi moshi = new Moshi.Builder().build();
         JsonAdapter<NoteEntity> jsonAdapter = moshi.adapter(NoteEntity.class);
-        objectOutputStream.writeInt(repository.getAllNotes().size());
+        objectOutputStream.writeInt(getRepo().getAllNotes().size());
         String json = null;
-        for (NoteEntity note : repository.getAllNotes()) {
+        for (NoteEntity note : getRepo().getAllNotes()) {
             json= jsonAdapter.toJson(note);
             objectOutputStream.writeObject(json);
         }
         objectOutputStream.close();
         fos.close();
         Log.d("@@@", "Записан");
+
+    }
+    private NotesRepository getRepo(){
+        return ((Application) getApplication()).getRepository();
 
     }
 

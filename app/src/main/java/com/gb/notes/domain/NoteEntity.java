@@ -1,11 +1,9 @@
-package com.gb.notes;
+package com.gb.notes.domain;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
-import java.util.Random;
-import java.util.UUID;
 
 public class NoteEntity implements Parcelable, Serializable {
 

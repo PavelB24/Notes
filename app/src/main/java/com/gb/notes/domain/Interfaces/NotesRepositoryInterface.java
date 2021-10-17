@@ -1,10 +1,7 @@
-package com.gb.notes.Interfaces;
+package com.gb.notes.domain.Interfaces;
 
-import android.os.Parcelable;
+import com.gb.notes.domain.NoteEntity;
 
-import com.gb.notes.NoteEntity;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public interface NotesRepositoryInterface {

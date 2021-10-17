@@ -1,6 +1,7 @@
-package com.gb.notes.Fragments;
+package com.gb.notes.ui.Fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +12,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 
-import com.gb.notes.NotesRepository;
+import com.gb.notes.domain.Application;
+import com.gb.notes.domain.NotesRepository;
 import com.gb.notes.R;
 
 public class DataManagerFragment extends Fragment {
-    ImageButton imageButton;
+    ImageButton deleteImageButton;
     private NotesRepository repository;
     private Bundle savedData;
     public final String CLEAR_DATABASE = "OK";
@@ -32,8 +34,8 @@ public class DataManagerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         savedData = getArguments();
         repository = savedData.getParcelable(NotesRepository.class.getCanonicalName());
-        imageButton = view.findViewById(R.id.delete_storage_button);
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        deleteImageButton = view.findViewById(R.id.delete_storage_button);
+        deleteImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AgreementDialog confirmation = new AgreementDialog();
@@ -41,9 +43,9 @@ public class DataManagerFragment extends Fragment {
                 getParentFragmentManager().setFragmentResultListener(AgreementDialog.class.getCanonicalName(), getActivity(), new FragmentResultListener() {
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                        Boolean isConfirmed = result.getBoolean(confirmation.AGREEMENT_KEY);
+                        boolean isConfirmed = result.getBoolean(confirmation.AGREEMENT_KEY);
                         if (isConfirmed) {
-                            repository.getAllNotes().clear();
+                            repository.deleteNoteList();
                         }
                     }
                 });

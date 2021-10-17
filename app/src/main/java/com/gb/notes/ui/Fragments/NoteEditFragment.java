@@ -1,4 +1,4 @@
-package com.gb.notes.Fragments;
+package com.gb.notes.ui.Fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,7 +13,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.gb.notes.NoteEntity;
+import com.gb.notes.domain.NoteEntity;
 import com.gb.notes.R;
 
 import java.util.UUID;
