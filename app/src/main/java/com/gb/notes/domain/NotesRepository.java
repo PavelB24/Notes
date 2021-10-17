@@ -18,7 +18,7 @@ public class NotesRepository implements NotesRepositoryInterface, Parcelable {
         return new ArrayList<>(searchCache);
     }
 
-    public void deleteNoteList(){
+    public void deleteNoteList() {
         notesList.clear();
     }
 

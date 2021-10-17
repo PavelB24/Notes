@@ -31,10 +31,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
 
     //Передаём в класс дату из репозитория, чтобы работать с ней далее
     public void setData(List<NoteEntity> dataFromRepo) {
-        Log.d(TAG, dataFromRepo.toString() +2);
-        Log.d(TAG, data.toString()+ 3);
+        Log.d(TAG, dataFromRepo.toString() + 2);
+        Log.d(TAG, data.toString() + 3);
         DiffUtil.DiffResult result = DiffUtil.calculateDiff(new NotesDiffCallback(data, dataFromRepo), true);
-        data= dataFromRepo;
+        data = dataFromRepo;
         result.dispatchUpdatesTo(this);
 
 

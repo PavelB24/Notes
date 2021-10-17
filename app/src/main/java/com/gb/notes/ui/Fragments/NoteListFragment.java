@@ -92,7 +92,7 @@ public class NoteListFragment extends Fragment implements OnNoteClickListener {
                     tempNote = result.getParcelable(NoteEntity.class.getCanonicalName());
                     if (!repository.findById(tempNote.getId())) {
                         repository.addNote(tempNote);
-                        Log.d(TAG, repository.getAllNotes().toString()+1);
+                        Log.d(TAG, repository.getAllNotes().toString() + 1);
                         adapter.setData(repository.getAllNotes());
                     } else {
                         repository.updateNote(tempNote.getId(), tempNote);
@@ -105,7 +105,8 @@ public class NoteListFragment extends Fragment implements OnNoteClickListener {
 
     @Override
     public void onClickEdit(NoteEntity note) {
-        Toast.makeText(getActivity(), R.string.edition_mode_toast_text, Toast.LENGTH_SHORT).show();  Toast.makeText(getActivity(), R.string.edition_mode_toast_text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), R.string.edition_mode_toast_text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), R.string.edition_mode_toast_text, Toast.LENGTH_SHORT).show();
         data = new Bundle();
         data.putParcelable(NoteEntity.class.getCanonicalName(), note);
         ((FragmentsCall) requireActivity()).callEditionFragment(data);

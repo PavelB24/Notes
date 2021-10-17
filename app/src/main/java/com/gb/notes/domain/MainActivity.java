@@ -37,20 +37,18 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
     private final String LOCAL_REPOSITORY_NAME = "repo.bin";
 
 
-
-
     //TODO модернизировать поиск
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
         setNavigation();
-        if(getRepo().getAllNotes().isEmpty()) {
-        try {
-            toInitNotesInRepository();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        if (getRepo().getAllNotes().isEmpty()) {
+            try {
+                toInitNotesInRepository();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         fragmentManager = getSupportFragmentManager();
         bottomNavigationItemView.setSelectedItemId(R.id.notes_item_menu);
@@ -153,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
         objectOutputStream.writeInt(getRepo().getAllNotes().size());
         String json = null;
         for (NoteEntity note : getRepo().getAllNotes()) {
-            json= jsonAdapter.toJson(note);
+            json = jsonAdapter.toJson(note);
             objectOutputStream.writeObject(json);
         }
         objectOutputStream.close();
@@ -161,7 +159,8 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
         Log.d("@@@", "Записан");
 
     }
-    private NotesRepository getRepo(){
+
+    private NotesRepository getRepo() {
         return ((Application) getApplication()).getRepository();
 
     }
