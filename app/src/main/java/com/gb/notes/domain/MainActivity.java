@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
         setNavigation();
-        if (getRepo().getAllNotes().isEmpty()) {
+        if (getRepository().getAllNotes().isEmpty()) {
             try {
                 toInitNotesInRepository();
             } catch (IOException | ClassNotFoundException e) {
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
     private void setNavigation() {
         bottomNavigationItemView = findViewById(R.id.navigation_bar);
         Bundle savedData = new Bundle();
-        savedData.putParcelable(NotesRepository.class.getCanonicalName(), getRepo());
+        savedData.putParcelable(NotesRepository.class.getCanonicalName(), getRepository());
         bottomNavigationItemView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -103,8 +103,8 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
             list.add(jsonAdapter.fromJson(json));
             Log.d("@@@", list.toString());
         }
-        getRepo().addAll(list);
-        Log.d("@@@", "size " + getRepo().getAllNotes().size());
+        getRepository().addAll(list);
+        Log.d("@@@", "size " + getRepository().getAllNotes().size());
         objectInputStream.close();
         fileInputStream.close();
         Log.d("@@@", "Восстановлен");
@@ -148,9 +148,9 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fos);
         Moshi moshi = new Moshi.Builder().build();
         JsonAdapter<NoteEntity> jsonAdapter = moshi.adapter(NoteEntity.class);
-        objectOutputStream.writeInt(getRepo().getAllNotes().size());
+        objectOutputStream.writeInt(getRepository().getAllNotes().size());
         String json = null;
-        for (NoteEntity note : getRepo().getAllNotes()) {
+        for (NoteEntity note : getRepository().getAllNotes()) {
             json = jsonAdapter.toJson(note);
             objectOutputStream.writeObject(json);
         }
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements FragmentsCall {
 
     }
 
-    private NotesRepository getRepo() {
+    private NotesRepository getRepository() {
         return ((Application) getApplication()).getRepository();
 
     }

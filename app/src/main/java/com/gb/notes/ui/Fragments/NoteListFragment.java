@@ -93,11 +93,10 @@ public class NoteListFragment extends Fragment implements OnNoteClickListener {
                     if (!repository.findById(tempNote.getId())) {
                         repository.addNote(tempNote);
                         Log.d(TAG, repository.getAllNotes().toString() + 1);
-                        adapter.setData(repository.getAllNotes());
                     } else {
                         repository.updateNote(tempNote.getId(), tempNote);
-                        adapter.setData(repository.getAllNotes());
                     }
+                    adapter.setData(repository.getAllNotes());
                 }
             }
         });
@@ -105,7 +104,6 @@ public class NoteListFragment extends Fragment implements OnNoteClickListener {
 
     @Override
     public void onClickEdit(NoteEntity note) {
-        Toast.makeText(getActivity(), R.string.edition_mode_toast_text, Toast.LENGTH_SHORT).show();
         Toast.makeText(getActivity(), R.string.edition_mode_toast_text, Toast.LENGTH_SHORT).show();
         data = new Bundle();
         data.putParcelable(NoteEntity.class.getCanonicalName(), note);
@@ -120,7 +118,7 @@ public class NoteListFragment extends Fragment implements OnNoteClickListener {
         getParentFragmentManager().setFragmentResultListener(AgreementDialog.class.getCanonicalName(), getActivity(), new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                Boolean isConfirmed = result.getBoolean(confirmation.AGREEMENT_KEY);
+                boolean isConfirmed = result.getBoolean(confirmation.AGREEMENT_KEY);
                 if (isConfirmed) {
                     Toast.makeText(getActivity(), R.string.deleted_note_toast_text, Toast.LENGTH_SHORT).show();
                     repository.removeNote(note.getId());
@@ -149,13 +147,11 @@ public class NoteListFragment extends Fragment implements OnNoteClickListener {
                     onClickDelete(note);
                 } else if (menuItem.getItemId() == R.id.edit_note_item) {
                     onClickEdit(note);
-
                 }
                 return false;
             }
         });
         popupMenu.show();
-        //TODO
     }
 
 

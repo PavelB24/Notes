@@ -14,7 +14,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="standart_padding">16dp</dimen>
     <dimen name="item_notes_buttons_width">50dp</dimen>
-    <dimen name="halfed_padding">8dp</dimen>
+    <dimen name="half_padding">8dp</dimen>
     <dimen name="item_notes_corner_radius">16dp</dimen>
     <dimen name="note_view_fragment_notes_description_text_size">24sp</dimen>
     <dimen name="data_manager_title">40sp</dimen>

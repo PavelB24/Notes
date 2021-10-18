@@ -35,4 +35,6 @@
     <string name="note_view_fragment_back_button_text">Back</string>
     <string name="unsuccessful_search_toast_text">Search was unsuccessful</string>
     <string name="data_manager_title">Data Manager</string>
+    <string name="data_manager_data_transmitter_toggle_button_textOn">Transmission is stopped</string>
+    <string name="data_manager_data_transmitter_toggle_button_textOff">Extra Actions</string>
 </resources>

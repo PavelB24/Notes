@@ -98,6 +98,14 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
-        <item name="android:padding">@dimen/halfed_padding</item>
+        <item name="android:padding">@dimen/half_padding</item>
+    </style>
+
+    <style name="delete_all_notes_img_button_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:backgroundTintMode">src_atop</item>
+        <item name="android:background">?selectableItemBackground</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_weight">1</item>
     </style>
 </resources>

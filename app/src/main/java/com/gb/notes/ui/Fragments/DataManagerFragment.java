@@ -1,11 +1,13 @@
 package com.gb.notes.ui.Fragments;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,9 +19,11 @@ import com.gb.notes.domain.NotesRepository;
 import com.gb.notes.R;
 
 public class DataManagerFragment extends Fragment {
-    ImageButton deleteImageButton;
+    private ImageButton deleteImageButton;
     private NotesRepository repository;
     private Bundle savedData;
+    private ToggleButton secretButton;
+
     public final String CLEAR_DATABASE = "OK";
 
 
@@ -35,24 +39,38 @@ public class DataManagerFragment extends Fragment {
         savedData = getArguments();
         repository = savedData.getParcelable(NotesRepository.class.getCanonicalName());
         deleteImageButton = view.findViewById(R.id.delete_storage_button);
-        deleteImageButton.setOnClickListener(new View.OnClickListener() {
+        toInitDeleteImageButton();
+        secretButton= view.findViewById(R.id.data_manager_data_transmitter_toggle_button);
+        secretButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AgreementDialog confirmation = new AgreementDialog();
-                confirmation.show(getParentFragmentManager(), CLEAR_DATABASE);
-                getParentFragmentManager().setFragmentResultListener(AgreementDialog.class.getCanonicalName(), getActivity(), new FragmentResultListener() {
-                    @Override
-                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                        boolean isConfirmed = result.getBoolean(confirmation.AGREEMENT_KEY);
-                        if (isConfirmed) {
-                            repository.deleteNoteList();
-                        }
-                    }
-                });
+                secretButton.setChecked(false);
+                new AlertDialog.Builder(requireActivity()).setView(R.layout.password_dialog_layout).create().show();
 
             }
         });
+
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void toInitDeleteImageButton() {
+        deleteImageButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            AgreementDialog confirmation = new AgreementDialog();
+            confirmation.show(getParentFragmentManager(), CLEAR_DATABASE);
+            getParentFragmentManager().setFragmentResultListener(AgreementDialog.class.getCanonicalName(), getActivity(), new FragmentResultListener() {
+                @Override
+                public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                    boolean isConfirmed = result.getBoolean(confirmation.AGREEMENT_KEY);
+                    if (isConfirmed) {
+                        repository.deleteNoteList();
+                    }
+                }
+            });
+
+        }
+    });
     }
 
     public static DataManagerFragment getInstance(Bundle data) {
