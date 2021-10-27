@@ -1,4 +1,4 @@
-package com.gb.notes.ui.Fragments;
+package com.gb.notes.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

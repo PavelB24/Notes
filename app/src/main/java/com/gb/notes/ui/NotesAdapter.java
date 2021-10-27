@@ -1,4 +1,4 @@
-package com.gb.notes.domain;
+package com.gb.notes.ui;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,11 +9,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gb.notes.domain.Interfaces.OnNoteClickListener;
 import com.gb.notes.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.gb.notes.domain.NoteEntity;
+import com.gb.notes.domain.NotesDiffCallback;
+import com.gb.notes.domain.OnNoteClickListener;
 
 public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     List<NoteEntity> data = new ArrayList<>();

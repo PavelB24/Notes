@@ -1,6 +1,4 @@
-package com.gb.notes.domain.Interfaces;
-
-import com.gb.notes.domain.NoteEntity;
+package com.gb.notes.domain;
 
 import java.util.List;
 

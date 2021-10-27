@@ -1,4 +1,4 @@
-package com.gb.notes.domain.Interfaces;
+package com.gb.notes.domain;
 
 import android.os.Bundle;
 

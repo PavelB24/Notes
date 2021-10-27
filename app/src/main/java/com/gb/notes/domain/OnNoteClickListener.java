@@ -1,8 +1,6 @@
-package com.gb.notes.domain.Interfaces;
+package com.gb.notes.domain;
 
 import android.view.View;
-
-import com.gb.notes.domain.NoteEntity;
 
 public interface OnNoteClickListener {
         void onClickEdit(NoteEntity note);

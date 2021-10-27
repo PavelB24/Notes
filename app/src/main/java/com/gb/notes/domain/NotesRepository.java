@@ -4,8 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.gb.notes.domain.Interfaces.NotesRepositoryInterface;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.gb.notes.ui.Fragments;
+package com.gb.notes.ui;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

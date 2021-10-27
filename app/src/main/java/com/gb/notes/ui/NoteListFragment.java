@@ -1,4 +1,4 @@
-package com.gb.notes.ui.Fragments;
+package com.gb.notes.ui;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -20,10 +20,9 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gb.notes.domain.Interfaces.FragmentsCall;
-import com.gb.notes.domain.Interfaces.OnNoteClickListener;
+import com.gb.notes.domain.FragmentsCall;
+import com.gb.notes.domain.OnNoteClickListener;
 import com.gb.notes.domain.NoteEntity;
-import com.gb.notes.domain.NotesAdapter;
 import com.gb.notes.domain.NotesRepository;
 import com.gb.notes.R;
 
