@@ -1,5 +1,4 @@
 package com.gb.notes.ui
-
 import androidx.appcompat.app.AppCompatActivity
 import com.gb.notes.domain.FragmentsCall
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -24,9 +23,8 @@ import java.util.ArrayList
 class MainActivity : AppCompatActivity(), FragmentsCall {
     private lateinit var fragmentManager: FragmentManager
     private lateinit var bottomNavigationItemView: BottomNavigationView
-    private  val LOCAL_REPOSITORY_NAME = "repo.bin"
+    private  val  LOCAL_REPOSITORY_NAME = "repo.bin"
 
-    //TODO модернизировать поиск
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_layout)
@@ -105,7 +103,7 @@ class MainActivity : AppCompatActivity(), FragmentsCall {
         val size = objectInputStream.readInt()
         val list: MutableList<NoteEntity?> = ArrayList()
         for (i in 0 until size) {
-            val json = objectInputStream.readObject() as String
+            val json: String = objectInputStream.readObject() as String
             list.add(jsonAdapter.fromJson(json))
             Log.d("@@@", list.toString())
         }
@@ -116,7 +114,7 @@ class MainActivity : AppCompatActivity(), FragmentsCall {
         Log.d("@@@", "Восстановлен")
     }
 
-    override fun callEditionFragment(data: Bundle) {
+    override fun callEditionFragment(data: Bundle?) {
         fragmentManager.popBackStack()
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             fragmentManager.beginTransaction()
@@ -172,7 +170,7 @@ class MainActivity : AppCompatActivity(), FragmentsCall {
     }
 
     private val repository: NotesRepository
-        private get() = (application as Application).repository
+        get() = (application as Application).repository
 
     override fun onStop() {
         try {
