@@ -15,6 +15,7 @@ import android.content.res.Configuration
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.io.IOException
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity(), FragmentsCall {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_layout)
         setNavigation()
+        //TODO Вот тут ошибка, переделай соответственно записи
         if (repository.allNotes.isEmpty()) {
             try {
                 toInitNotesInRepository()
@@ -96,7 +98,7 @@ class MainActivity : AppCompatActivity(), FragmentsCall {
 
     @Throws(IOException::class, ClassNotFoundException::class)
     private fun toInitNotesInRepository() {
-        val moshi = Moshi.Builder().build()
+        val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
         val jsonAdapter = moshi.adapter(NoteEntity::class.java)
         val fileInputStream = openFileInput(LOCAL_REPOSITORY_NAME)
         val objectInputStream = ObjectInputStream(fileInputStream)
@@ -156,7 +158,7 @@ class MainActivity : AppCompatActivity(), FragmentsCall {
     private fun serializeNotes() {
         val fos = openFileOutput(LOCAL_REPOSITORY_NAME, MODE_PRIVATE)
         val objectOutputStream = ObjectOutputStream(fos)
-        val moshi = Moshi.Builder().build()
+        val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
         val jsonAdapter = moshi.adapter(NoteEntity::class.java)
         objectOutputStream.writeInt(repository.allNotes.size)
         var json: String? = null
